@@ -7,12 +7,13 @@ const totalPrice = document.getElementById('totalCost')
 function updateTable() {
     console.log('table updated');
     let newTotalPrice = 0;
-    for (let i = 0; i < productTotal.length; i++){
+    for (let i = 0; i < productTotal.length; i++) {
         console.log(quantities[i].value);
-        productTotal[i].innerHTML = (prices[i].innerHTML * quantities[i].value).toFixed(2);
-        newTotalPrice += prices[i].innerHTML * quantities[i].value;
+        let newProductTotal = prices[i].innerHTML * quantities[i].value;
+        productTotal[i].innerHTML = newProductTotal.toFixed(2);
+        newTotalPrice += newProductTotal;
     }
     totalPrice.innerHTML = newTotalPrice.toFixed(2);
 }
 
-groceryTable,addEventListener('change', updateTable);
+groceryTable, addEventListener('change', updateTable);
