@@ -43,7 +43,7 @@ function simulateThrows() {
     return myThrows;
 }
 
-function calculateTotalP1(throws) {
+function calculateThrowTotal(throws) {
     let newTotal = 0;
     for (let singlethrow in throws) {
         newTotal += (throws[singlethrow] * singlethrow);
@@ -61,7 +61,7 @@ function fillInScoreBlockPart1(throws) {
     scoreFirstGame[indexTable['fives']].innerHTML = throws[5] * 5;
     scoreFirstGame[indexTable['sixes']].innerHTML = throws[6] * 6;
 
-    let newTotal = calculateTotalP1(throws);
+    let newTotal = calculateThrowTotal(throws);
     scoreFirstGame[indexTable['total p1 without bonus']].innerHTML = newTotal;
 
     if (newTotal > 63) {
@@ -72,6 +72,74 @@ function fillInScoreBlockPart1(throws) {
     }
 
     scoreFirstGame[indexTable['total p1 top']].innerHTML = newTotal;
+}
+
+function checkThreeOfAKind(throws) {
+    for (let singlethrow in throws) {
+        if (throws[singlethrow] >= 3) {
+            return true;
+        }
+    }
+    return false;
+}
+
+function checkCarre(throws, threeofAKind) {
+    if (!threeofAKind) {
+        return false;
+    }
+
+    for (let singlethrow in throws) {
+        if (throws[singlethrow] >= 4) {
+            return true;
+        }
+    }
+    return false;
+}
+
+function checkFullHouse(throws, threeofAKind) {
+    if (!threeofAKind) {
+        return false;
+    }
+    for (let singlethrow in throws) {
+        if (throws[singlethrow] === 2) {
+            return true;
+        }
+    }
+    return false;
+}
+
+function checkSmallStreet(throws) {
+    if (throws[3] != 1) {
+        return false;
+    }
+    let throwsArray = []
+    for (let singlethrow in throws) {
+        for (let i = 0; i < throws[singlethrow]; i++) {
+            throwsArray.push(singlethrow);
+        }
+    }
+}
+
+function fillInScoreBlockPart2(throws) {
+    let threeofAKind = checkThreeOfAKind(throws);
+    if (threeofAKind) {
+        scoreFirstGame[indexTable['three of a kind']].innerHTML = calculateThrowTotal(throws);
+    } else {
+        scoreFirstGame[indexTable['three of a kind']].innerHTML = 0;
+    }
+    let carre = checkCarre(throws, threeofAKind);
+    if (carre) {
+        scoreFirstGame[indexTable['carre']].innerHTML = calculateThrowTotal(throws);
+    } else {
+        scoreFirstGame[indexTable['carre']].innerHTML = 0;
+    }
+    let fullHouse = checkFullHouse(throws, threeofAKind);
+    if (fullHouse) {
+        scoreFirstGame[indexTable['full house']].innerHTML = 25;
+    } else {
+        scoreFirstGame[indexTable['full house']].innerHTML = 0;
+    }
+    let smallStreet = checkSmallStreet(throws);
 }
 
 
