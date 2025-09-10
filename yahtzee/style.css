@@ -1,0 +1,14 @@
+#top-bottom-divider {
+    height: 80px;
+    vertical-align: bottom;
+}
+
+.line {
+    border-bottom: 2px solid;
+}
+
+.throw-result {
+    width: 80px;
+    border: 2px solid black;
+    text-align: center;
+}
