@@ -1,0 +1,15 @@
+body {
+    text-align: center;
+}
+
+.card {
+    max-width: 150px;
+}
+
+.points {
+    margin: 20px 0px;
+}
+
+#player {
+    margin: 50px 0px;
+}
