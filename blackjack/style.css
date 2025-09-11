@@ -13,3 +13,7 @@ body {
 #player {
     margin: 50px 0px;
 }
+
+#buttons-game {
+    display: none;
+}
