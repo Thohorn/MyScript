@@ -256,7 +256,10 @@ function hit() {
 function pass() {
     showCards("dealer");
     let dealerScore = updatePoints("dealer");
-    if (dealerScore < 16) {
+    let playerScore = updatePoints("player");
+    if (playerScore === 16 && dealerScore === 16) {
+        checkWinner();
+    } else if (dealerScore <= 16) {
         drawCards("dealer");
         pass();
     } else {
