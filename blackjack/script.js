@@ -137,25 +137,27 @@ function showCards(target, initial = false) {
 function checkAceValue(target) {
     let value = 0;
     let aces = [];
+    let hand = [];
     if (target === "player") {
-        for (let i = 0; i < playerCards.length; i++) {
-            if (playerCards[i].value === 11 || playerCards[i].value === 1) {
-                aces.push(playerCards[i]);
-            }
-            value += playerCards[i].value;
+        hand = playerCards;
+    } else if (target === "dealer") {
+        hand = dealerCards;
+    }
+    for (let i = 0; i < hand.length; i++) {
+        if (hand[i].value === 11 || hand[i].value === 1) {
+            aces.push(hand[i]);
         }
-        if (value > 21) {
-            let newValue = value;
+        value += hand[i].value;
+    }
+    if (value > 21) {
+        let newValue = value;
+        console.log(newValue);
+        for (let i = 0; i < aces.length; i++) {
+            newValue -= (aces[i].value - 1);
             console.log(newValue);
-            for (let i = 0; i < aces.length; i++) {
-                console.log(aces[i].value);
-                newValue -= (aces[i].value - 1);
-                console.log(newValue);
-                if (newValue < 21) {
-                    console.log("newValue below 21");
-                    aces[i].value = 1;
-                    return;
-                }
+            if (newValue < 21) {
+                aces[i].value = 1;
+                return;
             }
         }
     }
@@ -193,7 +195,9 @@ function checkWinner() {
         dealerScore += dealerCards[i].value;
     }
 
-    if (playerScore > dealerScore) {
+    if (dealerScore > 21) {
+        youWon();
+    } else if (playerScore > dealerScore) {
         youWon();
     } else {
         youLose();
@@ -228,13 +232,6 @@ function updatePoints(target, initial = false) {
             dealerScore += dealerCards[i].value;
         }
         dealerPoints.innerHTML = dealerScore;
-        if (dealerScore > 21) {
-            youWon();
-        } else if (dealerScore === 21) {
-            youLose();
-        } else if (dealerScore >= 16) {
-            checkWinner();
-        }
         return dealerScore;
     }
 }
