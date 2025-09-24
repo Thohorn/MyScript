@@ -15,10 +15,12 @@ const playerPoints = document.getElementById("player-points");
 const endGameMessage = document.getElementById("end-game-message");
 
 class Card {
-    constructor(name, value) {
+    constructor(name, value, back = false) {
         this._name = name;
         this._value = value;
-        this._path = `images/${name}.png`
+        this._back = back;
+        this._path = `images/${name}.png`;
+        this._element = this.cardElement();
     }
 
     set value(value) {
@@ -29,8 +31,31 @@ class Card {
         return this._value;
     }
 
+    /**
+     * @param {boolean} value
+     */
+    set back(value) {
+        this._back = value;
+        this.updateElementSource();
+    }
+
     get path() {
         return this._path;
+    }
+
+    get element() {
+        return this._element;
+    }
+
+    cardElement() {
+        let cardElement = document.createElement("img");
+        cardElement.className = "card";
+        cardElement.src = this._back ? "images/card-back.png" : this._path;
+        return cardElement;
+    }
+
+    updateElementSource() {
+        this._element.src = this._back ? "images/card-back.png" : this._path;
     }
 }
 
@@ -119,30 +144,22 @@ function drawCards(target, initial = false) {
 
 function showCards(target, initial = false) {
     if (initial) {
-        elementDealerCards.innerHTML = `<img src="images/card-back.png" class="card"> <img src="${dealerCards[1].path}" class="card">`
-        elementPlayerCards.innerHTML = `<img src="${playerCards[0].path}" class="card"> <img src="${playerCards[1].path}" class="card">`
+        dealerCards[0].back = true;
+        for (let i = 0; i < 2; i++) {
+            elementDealerCards.appendChild(dealerCards[i].element);
+            elementPlayerCards.appendChild(playerCards[i].element);
+        }
     } else if (target === "player") {
-        elementPlayerCards.innerHTML = "";
-        for (let i = 0; i < playerCards.length; i++) {
-            elementPlayerCards.innerHTML += `<img src="${playerCards[i].path}" class="card">`
-        }
+        elementPlayerCards.appendChild(playerCards[playerCards.length - 1].element);
     } else if (target === "dealer") {
-        elementDealerCards.innerHTML = "";
-        for (let i = 0; i < dealerCards.length; i++) {
-            elementDealerCards.innerHTML += `<img src="${dealerCards[i].path}" class="card">`
-        }
+        dealerCards[0].back = false;
+        elementDealerCards.appendChild(dealerCards[dealerCards.length - 1].element);
     }
 }
 
-function checkAceValue(target) {
+function checkAceValue(hand) {
     let value = 0;
     let aces = [];
-    let hand = [];
-    if (target === "player") {
-        hand = playerCards;
-    } else if (target === "dealer") {
-        hand = dealerCards;
-    }
     for (let i = 0; i < hand.length; i++) {
         if (hand[i].value === 11 || hand[i].value === 1) {
             aces.push(hand[i]);
@@ -151,10 +168,8 @@ function checkAceValue(target) {
     }
     if (value > 21) {
         let newValue = value;
-        console.log(newValue);
         for (let i = 0; i < aces.length; i++) {
             newValue -= (aces[i].value - 1);
-            console.log(newValue);
             if (newValue < 21) {
                 aces[i].value = 1;
                 return;
@@ -213,7 +228,7 @@ function updatePoints(target, initial = false) {
         let playerScore = 0;
         for (let i = 0; i < playerCards.length; i++) {
             if (playerCards[i].value === 11 || playerCards[i].value === 1) {
-                checkAceValue("player");
+                checkAceValue(playerCards);
             }
             playerScore += playerCards[i].value;
         }
@@ -227,7 +242,7 @@ function updatePoints(target, initial = false) {
         let dealerScore = 0;
         for (let i = 0; i < dealerCards.length; i++) {
             if (dealerCards[i].value === 11 || dealerCards[i].value === 1) {
-                checkAceValue("dealer");
+                checkAceValue(dealerCards);
             }
             dealerScore += dealerCards[i].value;
         }

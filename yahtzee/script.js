@@ -50,10 +50,12 @@ const gameTable = {
     'sixth-game': scoreSixthGame
 }
 
+let game;
+
 function checkGame() {
-    for (let game in possibleGames) {
-        if (possibleGames[game].checked) {
-            return possibleGames[game].value
+    for (let thisGame in possibleGames) {
+        if (possibleGames[thisGame].checked) {
+            game = gameTable[possibleGames[thisGame].value];
         }
     }
 }
@@ -81,25 +83,25 @@ function calculateThrowTotal() {
     return newTotal;
 }
 
-function fillInScoreBlockPart1(game) {
-    gameTable[game][indexTable['ones']].innerHTML = throws[1] * 1;
-    gameTable[game][indexTable['twos']].innerHTML = throws[2] * 2;
-    gameTable[game][indexTable['threes']].innerHTML = throws[3] * 3;
-    gameTable[game][indexTable['fours']].innerHTML = throws[4] * 4;
-    gameTable[game][indexTable['fives']].innerHTML = throws[5] * 5;
-    gameTable[game][indexTable['sixes']].innerHTML = throws[6] * 6;
+function fillInScoreBlockPart1() {
+    game[indexTable['ones']].innerHTML = throws[1] * 1;
+    game[indexTable['twos']].innerHTML = throws[2] * 2;
+    game[indexTable['threes']].innerHTML = throws[3] * 3;
+    game[indexTable['fours']].innerHTML = throws[4] * 4;
+    game[indexTable['fives']].innerHTML = throws[5] * 5;
+    game[indexTable['sixes']].innerHTML = throws[6] * 6;
 
     let newTotal = calculateThrowTotal(throws);
-    gameTable[game][indexTable['total p1 without bonus']].innerHTML = newTotal;
+    game[indexTable['total p1 without bonus']].innerHTML = newTotal;
 
     if (newTotal > 63) {
-        gameTable[game][indexTable['bonus']].innerHTML = 35;
+        game[indexTable['bonus']].innerHTML = 35;
         newTotal += 35;
     } else {
-        gameTable[game][indexTable['bonus']].innerHTML = 0;
+        game[indexTable['bonus']].innerHTML = 0;
     }
 
-    gameTable[game][indexTable['total p1 top']].innerHTML = newTotal;
+    game[indexTable['total p1 top']].innerHTML = newTotal;
 
     return newTotal;
 }
@@ -141,35 +143,35 @@ function checkStraight(straightLength) {
 function calculateTotalP2(game) {
     let newTotal = 0;
     for (let i = 9; i < 16; i++) {
-        newTotal += parseInt(gameTable[game][i].innerHTML);
+        newTotal += parseInt(game[i].innerHTML);
     }
     return newTotal;
 }
 
-function fillInScoreBlockPart2(game, p1Score) {
+function fillInScoreBlockPart2(p1Score) {
     let throwTotal = calculateThrowTotal();
 
-    gameTable[game][indexTable['three of a kind']].innerHTML = checkXOfAKind(3) ? throwTotal : 0;
-    gameTable[game][indexTable['carre']].innerHTML = checkXOfAKind(4) ? throwTotal : 0;
-    gameTable[game][indexTable['full house']].innerHTML = checkFullHouse() ? 25 : 0;
-    gameTable[game][indexTable['small straight']].innerHTML = checkStraight(4) ? 30 : 0;
-    gameTable[game][indexTable['large straight']].innerHTML = checkStraight(5) ? 40 : 0;
-    gameTable[game][indexTable['topscore']].innerHTML = checkXOfAKind(5) ? 50 : 0;
-    gameTable[game][indexTable['chance']].innerHTML = throwTotal;
+    game[indexTable['three of a kind']].innerHTML = checkXOfAKind(3) ? throwTotal : 0;
+    game[indexTable['carre']].innerHTML = checkXOfAKind(4) ? throwTotal : 0;
+    game[indexTable['full house']].innerHTML = checkFullHouse() ? 25 : 0;
+    game[indexTable['small straight']].innerHTML = checkStraight(4) ? 30 : 0;
+    game[indexTable['large straight']].innerHTML = checkStraight(5) ? 40 : 0;
+    game[indexTable['topscore']].innerHTML = checkXOfAKind(5) ? 50 : 0;
+    game[indexTable['chance']].innerHTML = throwTotal;
 
     let totalP2 = calculateTotalP2(game);
-    gameTable[game][indexTable['total p2']].innerHTML = totalP2;
-    gameTable[game][indexTable['total p1 bottom']].innerHTML = p1Score;
-    gameTable[game][indexTable['total total']].innerHTML = totalP2 + p1Score;
+    game[indexTable['total p2']].innerHTML = totalP2;
+    game[indexTable['total p1 bottom']].innerHTML = p1Score;
+    game[indexTable['total total']].innerHTML = totalP2 + p1Score;
 }
 
 
 function fillInScoreBlock() {
-    let game = checkGame();
+    checkGame();
     cleanThrows();
-    let throws = simulateThrows();
-    let p1Score = fillInScoreBlockPart1(game, throws);
-    fillInScoreBlockPart2(game, p1Score);
+    simulateThrows();
+    let p1Score = fillInScoreBlockPart1();
+    fillInScoreBlockPart2(p1Score);
 
 }
 
