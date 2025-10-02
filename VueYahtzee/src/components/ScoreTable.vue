@@ -19,7 +19,9 @@
     const bonus = computed(() => sumOfDice.value > 63 ? 35 : 0);
     const p1Total = computed(() => sumOfDice.value + bonus.value);
 
-    const checkXOfAKind = (targetCount, sortedDice = dice.value.sort((a, b) => a - b)) => {
+    const checkXOfAKind = ( targetCount, 
+                            sortedDice = dice.value.sort((a, b) => a - b)
+                          ) => {
         if(dice.value[0] === 0){
             return false;
         }
@@ -50,11 +52,32 @@
             
     }
 
+    const checkStraight = (straightLength) => {
+        let sortedDice = dice.value.sort((a, b) => a - b);
+        let counter = 1;
+        for (let i = 0; i < sortedDice.length; i++){
+            if (i+1 <= sortedDice.length){
+                if (sortedDice[i+1] - sortedDice[i] === 1){
+                    counter++;
+                } else {
+                    counter = 1;
+                }
+
+                if (counter === straightLength) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     const threeOfAKind = computed(() => checkXOfAKind(3) ? sumOfDice.value : 0);
     const carre = computed(() => checkXOfAKind(4) ? sumOfDice.value : 0);
     const Topscore = computed(() => checkXOfAKind(5) ? 50 : 0);
 
     const fullHouse = computed(() => checkFullHouse() ? 25: 0);
+    const smallStraight = computed(() => checkStraight(4) ? 30 : 0);
+    const largeStraight = computed(() => checkStraight(5) ? 40 : 0);
 
 
 
@@ -225,7 +248,7 @@
             <tr>
                 <td>Kleine straat</td>
                 <td>30 punten</td>
-                <td class="first-game">0</td>
+                <td class="first-game">{{ smallStraight }}</td>
                 <td class="second-game">0</td>
                 <td class="third-game">0</td>
                 <td class="fourth-game">0</td>
@@ -235,7 +258,7 @@
             <tr>
                 <td>Grote straat</td>
                 <td>40 punten</td>
-                <td class="first-game">0</td>
+                <td class="first-game">{{ largeStraight }}</td>
                 <td class="second-game">0</td>
                 <td class="third-game">0</td>
                 <td class="fourth-game">0</td>
