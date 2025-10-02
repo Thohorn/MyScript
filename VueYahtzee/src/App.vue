@@ -9,7 +9,8 @@
 
 <template>
   <ThrownDice v-model="dice" />
-  <ScoreTable v-model="dice"/>
+  <!-- <ScoreTable v-model="dice"/> -->
+   <ScoreTable :dice="dice" />
 
 </template>
 
