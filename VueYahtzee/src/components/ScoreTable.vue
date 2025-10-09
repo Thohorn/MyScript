@@ -6,7 +6,8 @@
     const dice = props.dice;
 
     const countThrows = computed(() => {
-        let mycountThrows = {1: 0,
+        let mycountThrows = {
+                        1: 0,
                         2: 0,
                         3: 0,
                         4: 0,
@@ -38,7 +39,7 @@
 
     const checkXOfAKind = (targetCount) => {
         for (let value in countThrows.value){
-            if(countThrows.value[value] === targetCount){
+            if(countThrows.value[value] >= targetCount){
                 return true;
             }
         }
@@ -46,8 +47,10 @@
     }
 
     const checkFullHouse = () => {
-        if ((checkXOfAKind(3) && checkXOfAKind(2))){
+        for (let singlethrow in countThrows.value) {
+        if (countThrows.value[singlethrow] === 2 && checkXOfAKind(3)) {
             return true;
+        }
         }
         return false;
     }
