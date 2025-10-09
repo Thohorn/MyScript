@@ -1,9 +1,8 @@
 <script setup>
     import { computed } from 'vue';
     
-    const props = defineProps(['dice'])
+    const {dice} = defineProps(['dice'])
 
-    const dice = props.dice;
 
     const countThrows = computed(() => {
         let mycountThrows = {
@@ -19,19 +18,6 @@
         }
         return mycountThrows;
     });
-
-    const sumSingleValue = (singleValue) => {
-        let ones = dice.filter((element) => {return element === singleValue});
-        return ones.reduce((sum, num) => sum + num, 0);
-    }
-
-    const sumOnes = computed(() => sumSingleValue(1));
-    const sumTwos = computed(() => sumSingleValue(2));
-    const sumThrees = computed(() => sumSingleValue(3));
-    const sumFours = computed(() => sumSingleValue(4));
-    const sumFives = computed(() => sumSingleValue(5));
-    const sumSixes = computed(() => sumSingleValue(6));
-
 
     const sumOfDice = computed(() => dice.reduce((sum, num) => sum + num, 0));
     const bonus = computed(() => sumOfDice.value > 63 ? 35 : 0);
@@ -119,7 +105,7 @@
             <tr>
                 <td>Enen</td>
                 <td>Tel alle Enen</td>
-                <td>{{ sumOnes }}</td>
+                <td>{{ countThrows.value[1] }}</td>
                 <td>0</td>
                 <td>0</td>
                 <td>0</td>
@@ -129,7 +115,7 @@
             <tr>
                 <td>Tweeën</td>
                 <td>Tel alle Tweeën</td>
-                <td>{{ sumTwos }}</td>
+                <td>{{ countThrows.value[2] }}</td>
                 <td>0</td>
                 <td>0</td>
                 <td>0</td>
@@ -139,7 +125,7 @@
             <tr>
                 <td>Drieën</td>
                 <td>Tel alle Drieën</td>
-                <td>{{ sumThrees }}</td>
+                <td>{{ countThrows.value[3] }}</td>
                 <td>0</td>
                 <td>0</td>
                 <td>0</td>
@@ -149,7 +135,7 @@
             <tr>
                 <td>Vieren</td>
                 <td>Tel alle Vieren</td>
-                <td>{{ sumFours }}</td>
+                <td>{{ countThrows.value[4] }}</td>
                 <td>0</td>
                 <td>0</td>
                 <td>0</td>
@@ -159,7 +145,7 @@
             <tr>
                 <td>Vijven</td>
                 <td>Tel alle Vijven</td>
-                <td>{{ sumFives }}</td>
+                <td>{{ countThrows.value[5] }}</td>
                 <td>0</td>
                 <td>0</td>
                 <td>0</td>
@@ -169,7 +155,7 @@
             <tr>
                 <td>Zessen</td>
                 <td>Tel alle Zessen</td>
-                <td>{{ sumSixes }}</td>
+                <td>{{ countThrows.value[6] }}</td>
                 <td>0</td>
                 <td>0</td>
                 <td>0</td>
