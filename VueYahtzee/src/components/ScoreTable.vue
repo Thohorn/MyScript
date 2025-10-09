@@ -4,11 +4,23 @@
     const props = defineProps(['dice'])
 
     const dice = props.dice;
-    // const dice = defineModel();
+
+    const countThrows = computed(() => {
+        let mycountThrows = {1: 0,
+                        2: 0,
+                        3: 0,
+                        4: 0,
+                        5: 0,
+                        6: 0,
+                    };
+        for (let value in dice){
+            mycountThrows[dice[value]]++;
+        }
+        return mycountThrows;
+    });
 
     const sumSingleValue = (singleValue) => {
-        // let ones = dice.value.filter((element) => {return element === singleValue})
-        let ones = dice.filter((element) => {return element === singleValue})
+        let ones = dice.filter((element) => {return element === singleValue});
         return ones.reduce((sum, num) => sum + num, 0);
     }
 
@@ -19,107 +31,50 @@
     const sumFives = computed(() => sumSingleValue(5));
     const sumSixes = computed(() => sumSingleValue(6));
 
-    // const sumOfDice = computed(() => dice.value.reduce((sum, num) => sum + num, 0));
+
     const sumOfDice = computed(() => dice.reduce((sum, num) => sum + num, 0));
     const bonus = computed(() => sumOfDice.value > 63 ? 35 : 0);
     const p1Total = computed(() => sumOfDice.value + bonus.value);
 
-    // const checkXOfAKind = ( targetCount, 
-    //                         sortedDice = dice.value.sort((a, b) => a - b)
-    //                       ) => {
-    //     if(dice.value[0] === 0){
-    //         return false;
-    //     }
-    //     let count = 1;
-    //     for (let i = 0; i < sortedDice.length; i++){
-    //         if (i+1 !== sortedDice.length){
-    //             if(sortedDice[i] === sortedDice[i+1]){
-    //                 count++;
-    //                 if (count === targetCount){
-    //                     return true;
-    //                 }
-    //             } else {
-    //                 count = 1;
-    //             }
-    //         }
-    //     }
-    //     return false;        
-    // }
-
-    const checkXOfAKind = ( targetCount, 
-                            sortedDice = dice.sort((a, b) => a - b)
-                          ) => {
-        if(dice[0] === 0){
-            return false;
-        }
-        let count = 1;
-        for (let i = 0; i < sortedDice.length; i++){
-            if (i+1 !== sortedDice.length){
-                if(sortedDice[i] === sortedDice[i+1]){
-                    count++;
-                    if (count === targetCount){
-                        return true;
-                    }
-                } else {
-                    count = 1;
-                }
+    const checkXOfAKind = (targetCount) => {
+        for (let value in countThrows.value){
+            if(countThrows.value[value] === targetCount){
+                return true;
             }
         }
         return false;        
     }
 
     const checkFullHouse = () => {
-        // let sortedDice = dice.value.sort((a, b) => a - b);
-        let sortedDice = dice.sort((a, b) => a - b);
-        let two = false;
-        let three = false;
-
-        let threeDice = sortedDice.slice(2);
-        let twoDice = sortedDice.slice(0, 2);
-
-        if (checkXOfAKind(3, threeDice) && checkXOfAKind(2, twoDice)){
+        if ((checkXOfAKind(3) && checkXOfAKind(2))){
             return true;
         }
-
-        twoDice = sortedDice.slice(3);
-        threeDice = sortedDice.slice(0, 3);
-
-        if (checkXOfAKind(3, threeDice) && checkXOfAKind(2, twoDice)){
-            return true;
-        }
-
         return false;
-            
     }
 
     const checkStraight = (straightLength) => {
-        // let sortedDice = dice.value.sort((a, b) => a - b);
-        let sortedDice = dice.sort((a, b) => a - b);
-        let counter = 1;
-        for (let i = 0; i < sortedDice.length; i++){
-            if (i+1 <= sortedDice.length){
-                if (sortedDice[i+1] - sortedDice[i] === 1){
-                    counter++;
-                } else {
-                    counter = 1;
-                }
-
-                if (counter === straightLength) {
-                    return true;
-                }
+        let counter = 0;
+        for (let singlethrow in countThrows.value) {
+            if (countThrows.value[singlethrow] >= 1) {
+                counter++;
+            } else {
+                counter = 0;
+            }
+            if (counter >= straightLength) {
+                return true;
             }
         }
         return false;
     }
 
     const threeOfAKind = computed(() => checkXOfAKind(3) ? sumOfDice.value : 0);
-    const carre = computed(() => checkXOfAKind(4) ? sumOfDice.value : 0);
+    const fourOfAKind = computed(() => checkXOfAKind(4) ? sumOfDice.value : 0);
     const topScore = computed(() => checkXOfAKind(5) ? 50 : 0);
 
     const fullHouse = computed(() => checkFullHouse() ? 25: 0);
     const smallStraight = computed(() => checkStraight(4) ? 30 : 0);
     const largeStraight = computed(() => checkStraight(5) ? 40 : 0);
-    const p2Total = computed(() =>  threeOfAKind.value + carre.value + topScore.value + 
+    const p2Total = computed(() =>  threeOfAKind.value + fourOfAKind.value + topScore.value + 
                                     fullHouse.value + smallStraight.value + largeStraight.value + 
                                     sumOfDice.value);
 
@@ -267,7 +222,7 @@
             <tr>
                 <td>Carré</td>
                 <td>Totaal v.d. 5 stenen</td>
-                <td>{{ carre }}</td>
+                <td>{{ fourOfAKind }}</td>
                 <td>0</td>
                 <td>0</td>
                 <td>0</td>
