@@ -1,19 +1,15 @@
 <script setup>
-import { computed } from 'vue';
+import { ref, computed } from 'vue';
 
-const products = [{name:'Rijst', price:1.00, quantity:1, total:1.00}, 
-                  {name:'Broccoli', price:0.99, quantity:2, total:1.98},
-                  {name:'Koekjes', price:1.20, quantity:4, total:4.80},
-                  {name:'Noten', price:2.99, quantity:0, total:0.00}];
+const products = ref([{name:'Rijst', price:1.00, quantity:1}, 
+                  {name:'Broccoli', price:0.99, quantity:2},
+                  {name:'Koekjes', price:1.20, quantity:4},
+                  {name:'Noten', price:2.99, quantity:0}]);
 
 const listTotal = computed(() => {
-    let myListTotal = 0;
-    for (let product in products){
-        myListTotal += products[product].total;
-    }
-
-    return myListTotal.toFixed(2);
+    return products.value.reduce((acc, obj) => acc + (obj.price * obj.quantity), 0).toFixed(2)
 });
+
 
 </script>
 
@@ -28,11 +24,11 @@ const listTotal = computed(() => {
             </tr>
         </thead>
         <tbody>
-            <tr v-for="product in products">
+            <tr v-for="(product, index) in products" :key="index">
                 <td>{{ product.name }}</td>
                 <td class="number">{{ product.price }}</td>
-                <td class="number"><input type="number" value="0" v-model="product.quantity"/></td>
-                <td class="number">{{ product.total }}</td>
+                <td class="number"><input id="index" type="number" v-model="product.quantity" /></td>
+                <td class="number">{{ (product.price * product.quantity).toFixed(2) }}</td>
             </tr>
             <tr>
                 <td colspan="3"><strong>Totaal</strong></td>
