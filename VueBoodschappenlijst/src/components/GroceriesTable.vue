@@ -1,4 +1,5 @@
 <script setup>
+    import { removeGrocery } from '../domains/groceries/store.js';
     defineProps({
     products: Array,
     });
@@ -13,6 +14,7 @@
                 <th>Hoeveelhied</th>
                 <th>subtotaal</th>
                 <th>Aanpassen</th>
+                <th>Verwijderen</th>
             </tr>
         </thead>
         <tbody>
@@ -21,7 +23,8 @@
                 <td class="number">{{ product.price }}</td>
                 <td class="number"><input type="number" v-model="product.quantity" /></td>
                 <td class="number">{{ (product.price * product.quantity).toFixed(2) }}</td>
-                <td><router-link :to="'/edit/' + index">Aanpassen</router-link></td>
+                <td><router-link :to="'/edit/' + product.id">Aanpassen</router-link></td>
+                <td><button @click="removeGrocery(product)">Verwijderen</button></td>
             </tr>
             <tr>
                 <td colspan="3"><strong>Totaal</strong></td>

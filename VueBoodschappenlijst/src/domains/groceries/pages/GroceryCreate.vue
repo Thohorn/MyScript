@@ -1,8 +1,8 @@
 <script setup>
     import { addGrocery } from '../store';
-    import GroceryForm from './GroceryForm.vue';
+    import GroceryForm from '../components/GroceryForm.vue';
 
-    const grocery = {name: '', price: 0, amount: 0};
+    const grocery = {id: 0, name: '', price: 0, amount: 0};
 
 
 

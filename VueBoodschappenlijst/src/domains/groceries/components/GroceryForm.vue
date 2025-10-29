@@ -1,11 +1,14 @@
 <script setup>
+    import { useRouter } from 'vue-router';
     const {grocery} = defineProps({grocery:Object});
     const localGrocery = grocery;
 
     const emit = defineEmits(['submit']);
+    const router = useRouter();
 
     const submit = () => {
-    emit('submit', {name:localGrocery.name, price:localGrocery.price, quantity:localGrocery.quantity});
+        emit('submit', {id: localGrocery.id, name:localGrocery.name, price:localGrocery.price, quantity:localGrocery.quantity});
+        router.push({path: '/overview'})
     };
 
 </script>

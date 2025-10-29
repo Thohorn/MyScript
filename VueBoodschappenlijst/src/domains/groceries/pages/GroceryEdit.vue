@@ -1,22 +1,22 @@
 <script setup>
     import { watch } from 'vue';
     import { useRoute } from 'vue-router';
-    import { addGrocery, getGroceryById } from '../store';
-    import GroceryForm from './GroceryForm.vue';
+    import { updateGrocery, getGroceryById } from '../store';
+    import GroceryForm from '../components/GroceryForm.vue';
 
     const route = useRoute()
-    let grocery = {name: '', price: 0, amount: 0};
+    let grocery = getGroceryById(route.params.id).value;
 
     watch(
     () => route.params.id,
     (newId) => {
-        grocery = getGroceryById(newId);
+        grocery = getGroceryById(newId).value;
     }
     );
 </script>
 
 <template>
-    <GroceryForm @submit="addGrocery" :grocery="grocery" />
+    <GroceryForm @submit="updateGrocery" :grocery="grocery" />
 </template>
 
 <style scoped>
