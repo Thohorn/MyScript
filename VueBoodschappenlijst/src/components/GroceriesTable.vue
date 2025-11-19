@@ -24,7 +24,7 @@
                 <td class="number"><input type="number" v-model="product.quantity" /></td>
                 <td class="number">{{ (product.price * product.quantity).toFixed(2) }}</td>
                 <td><router-link :to="'/edit/' + product.id">Aanpassen</router-link></td>
-                <td><button @click="removeGrocery(product)">Verwijderen</button></td>
+                <td><button @click="removeGrocery(product.id)">Verwijderen</button></td>
             </tr>
             <tr>
                 <td colspan="3"><strong>Totaal</strong></td>

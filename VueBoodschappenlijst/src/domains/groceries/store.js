@@ -23,7 +23,7 @@ export const updateGrocery = (updateGrocery) => {
     groceries.value[toUpdateIndex] = updateGrocery;
 }
 
-export const removeGrocery = (deleteGrocery) => {
-    let index = groceries.value.findIndex(grocery=> grocery.id == deleteGrocery.id);
+export const removeGrocery = (deleteGroceryId) => {
+    let index = groceries.value.findIndex(grocery=> grocery.id == deleteGroceryId);
     groceries.value.splice(index, 1);
 }
