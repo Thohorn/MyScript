@@ -4,6 +4,7 @@
     <nav>
         <router-link to="/create"><button type="button">Create new</button></router-link>
         <router-link to="/overview"><button type="button">Overview</button></router-link>
+        <router-link to="/order"><button type="button">What to Order</button></router-link>
     </nav>
     <main>
         <RouterView />

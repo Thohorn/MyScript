@@ -1,7 +1,12 @@
 <script setup>
 import {useRouter, useRoute} from 'vue-router';
 const {product} = defineProps({product: Object});
-const localProduct = product;
+const localProduct = {
+    id: product.id,
+    name: product.name,
+    actualAmount: product.actualAmount,
+    minimumAmount: product.minimumAmount,
+};
 
 const emit = defineEmits(['submit']);
 const router = useRouter();
