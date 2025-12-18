@@ -8,7 +8,7 @@ export interface Product {
 }
 
 // State
-const inventory = ref([
+const inventory = ref<Product[]>([
     {id: 1, name: 'power-bank', actualAmount: 2, minimumAmount: 10},
     {id: 2, name: 'keyboard', actualAmount: 3, minimumAmount: 20},
     {id: 3, name: 'mouse', actualAmount: 15, minimumAmount: 10},
