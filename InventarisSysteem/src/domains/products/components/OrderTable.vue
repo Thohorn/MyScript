@@ -1,7 +1,9 @@
-<script setup>
-defineProps({
-    products: Array,
-});
+<script setup lang="ts">
+import type { Product } from '../store';
+
+defineProps<{
+    products: Product[],
+}>();
 </script>
 
 <template>

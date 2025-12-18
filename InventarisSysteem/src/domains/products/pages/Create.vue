@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import {addProduct} from '../store.ts';
 import ProductForm from '../components/ProductForm.vue';
 

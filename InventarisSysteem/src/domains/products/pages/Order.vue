@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import {getToOrderInventory as products} from '../store.ts';
 import OrderTable from '../components/OrderTable.vue';
 </script>

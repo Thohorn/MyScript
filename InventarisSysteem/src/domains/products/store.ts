@@ -1,6 +1,6 @@
 import {ref, computed} from 'vue';
 
-interface Product {
+export interface Product {
     id: number;
     name: string;
     actualAmount: number;
@@ -20,7 +20,9 @@ const inventory = ref([
 
 // Getters
 export const getAllInventory = computed(() => inventory.value);
+
 export const getProductById = (id: number) => computed(() => inventory.value.find((product: Product) => product.id == id));
+
 export const getToOrderInventory = computed(() => {
     const orderProducts: Product[] = [];
     inventory.value.forEach((product: Product) => {

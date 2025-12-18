@@ -1,10 +1,13 @@
-<script setup>
+<script setup lang="ts">
 import {useRoute} from 'vue-router';
 import {updateProduct, getProductById} from '../store.ts';
 import ProductForm from '../components/ProductForm.vue';
 
 const route = useRoute();
-let product = getProductById(route.params.id).value;
+
+const routeId = Number(route.params.id?.toString())
+
+const product = getProductById(routeId);
 </script>
 
 <template>
