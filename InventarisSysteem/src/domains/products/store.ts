@@ -21,7 +21,7 @@ const inventory = ref<Product[]>([
 // Getters
 export const getAllInventory = computed(() => inventory.value);
 
-export const getProductById = (id: number) => computed(() => inventory.value.find((product: Product) => product.id == id));
+export const getProductById = (id: number) => computed(() => inventory.value.find((product: Product) => product.id === id));
 
 export const getToOrderInventory = computed(() => {
     const orderProducts: Product[] = [];
@@ -35,18 +35,18 @@ export const getToOrderInventory = computed(() => {
 
 // Actions
 export const addProduct = (product: Product) => {
-    if (product.id == 0){
+    if (product.id === 0){
         product.id = inventory.value.length + 1;
     }
     return inventory.value.push(product);
 }
 
 export const updateProduct = (updateProduct: Product) => {
-    const toUpdateIndex: number = inventory.value.findIndex((product: Product) => product.id == updateProduct.id);
+    const toUpdateIndex: number = inventory.value.findIndex((product: Product) => product.id === updateProduct.id);
     inventory.value[toUpdateIndex] = updateProduct;
 };
 
 export const removeProduct = (deleteProductId: number) => {
-    const index: number = inventory.value.findIndex((product: Product) => product.id == deleteProductId);
+    const index: number = inventory.value.findIndex((product: Product) => product.id === deleteProductId);
     inventory.value.splice(index, 1);
 };
