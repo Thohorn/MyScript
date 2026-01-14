@@ -1,19 +1,17 @@
-<script setup>
+<script setup lang="ts">
+import { ref } from 'vue';
 import {useRouter, useRoute} from 'vue-router';
-const {product} = defineProps({product: Object});
-const localProduct = product;
+import type { Product } from '../store';
+const {product} = defineProps<{product: Product}>();
+
+const localProduct = ref({...product});
 
 const emit = defineEmits(['submit']);
 const router = useRouter();
 const route = useRoute();
 
 const submit = () => {
-    emit('submit', {
-        id: localProduct.id,
-        name: localProduct.name,
-        actualAmount: localProduct.actualAmount,
-        minimumAmount: localProduct.minimumAmount,
-    });
+    emit('submit', localProduct.value);
     router.push({path: '/overview'});
 };
 </script>

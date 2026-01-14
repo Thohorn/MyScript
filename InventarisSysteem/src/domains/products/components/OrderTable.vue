@@ -10,20 +10,12 @@ defineProps<{
     <table>
         <thead>
             <tr>
-                <th>Name</th>
-                <th>Amount in inventory</th>
-                <th>Should be in inventory</th>
-                <th></th>
+                <th>What to Order</th>
             </tr>
         </thead>
         <tbody>
             <tr v-for="(product, index) in products" :key="index">
                 <td>{{ product.name }}</td>
-                <td class="number"><input type="number" v-model="product.actualAmount" /></td>
-                <td class="number">{{ product.minimumAmount }}</td>
-                <td>
-                    <router-link :to="'/edit/' + product.id"><button type="button">Edit</button></router-link>
-                </td>
             </tr>
         </tbody>
     </table>
@@ -31,6 +23,7 @@ defineProps<{
 
 <style scoped>
 table {
+    margin: auto;
     border-collapse: collapse;
 }
 
