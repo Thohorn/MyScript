@@ -18,3 +18,7 @@ td, th {
 .price {
     text-align: right;
 }
+
+.current-page {
+    font-weight: 1000;
+}
