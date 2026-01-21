@@ -1,11 +1,9 @@
 <?php
 
-$products_old = [
-    "rice" => ["name" => "Rijst", "price" => 1.00, "quantity" => 1],
-    "broccoli" => ["name" => "Broccoli", "price" => 0.99, "quantity" => 2],
-    "cake" => ["name" => "Koekjes", "price" => 1.20, "quantity" => 4],
-    "nuts" => ["name" => "Noten", "price" => 2.99, "quantity" => 0]
-];
+use Core\Database;
+
+$config = require(base_path('config.php'));
+$db = new Database($config['database']);
 
 $products = $db->query("select * from groceries")->fetchAll();
 
@@ -17,4 +15,7 @@ function calculateTotalPrice($carry, $product)
 
 $totalPrice = array_reduce($products, "calculateTotalPrice");
 
-require "views/index.view.php";
+view("index.view.php", [
+    "products" => $products,
+    "totalPrice" => $totalPrice
+]);

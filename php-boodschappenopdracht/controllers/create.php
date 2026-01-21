@@ -1,3 +1,3 @@
 <?php
 
-require "views/create.view.php";
+view("create.view.php");
