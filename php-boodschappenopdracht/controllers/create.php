@@ -1,3 +1,5 @@
 <?php
 
-view("create.view.php");
+view("create.view.php", [
+    'errors' => []
+]);

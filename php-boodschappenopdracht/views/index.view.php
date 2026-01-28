@@ -13,10 +13,10 @@
     <tbody>
         <?php foreach ($products as $product): ?>
         <tr>
-            <td><?= $product['name']?></td>
-            <td class="price"><?= $product['price']?></td>
-            <td><?= $product['quantity']?></td>
-            <td class="price"><?= $product['price'] * $product['quantity']?></td>
+            <td><?= htmlspecialchars($product['name'])?></td>
+            <td class="price"><?= htmlspecialchars($product['price'])?></td>
+            <td><?= htmlspecialchars($product['quantity'])?></td>
+            <td class="price"><?= htmlspecialchars($product['price'] * $product['quantity'])?></td>
         </tr>
         <?php endforeach;?>
         <tr>
