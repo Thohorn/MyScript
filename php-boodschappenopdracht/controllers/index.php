@@ -17,6 +17,7 @@ function calculateTotalPrice($carry, $product)
 $totalPrice = array_reduce($products, "calculateTotalPrice");
 
 view("index.view.php", [
+    "title" => 'Overzicht',
     "products" => $products,
     "totalPrice" => $totalPrice
 ]);

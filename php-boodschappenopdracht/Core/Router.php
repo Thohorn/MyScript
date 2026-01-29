@@ -1,10 +1,13 @@
 <?php
+
 namespace Core;
 
-class Router {
+class Router
+{
     protected $routes = [];
 
-    public function add($uri, $controller, $method){
+    public function add($uri, $controller, $method)
+    {
         $this->routes[] = [
             'uri' => $uri,
             'controller' => $controller,
@@ -12,29 +15,35 @@ class Router {
         ];
     }
 
-    public function get($uri, $controller){
+    public function get($uri, $controller)
+    {
         $this->add($uri, $controller, "GET");
     }
 
-    public function post($uri, $controller){
+    public function post($uri, $controller)
+    {
         $this->add($uri, $controller, "POST");
     }
 
-    public function delete($uri, $controller){
+    public function delete($uri, $controller)
+    {
         $this->add($uri, $controller, "DELETE");
     }
 
-    public function patch($uri, $controller){
+    public function patch($uri, $controller)
+    {
         $this->add($uri, $controller, "PATCH");
     }
 
-    public function put($uri, $controller){
+    public function put($uri, $controller)
+    {
         $this->add($uri, $controller, "PUT");
     }
 
-    public function route($uri, $method){
+    public function route($uri, $method)
+    {
         foreach ($this->routes as $route) {
-            if($route['uri'] === $uri && $route['method'] === strtoupper($method)) {
+            if ($route['uri'] === $uri && $route['method'] === strtoupper($method)) {
                 return require base_path($route['controller']);
             }
         }
@@ -42,7 +51,8 @@ class Router {
         $this->abort();
     }
 
-    protected function abort() {
+    protected function abort()
+    {
         http_response_code(404);
 
         view("404.php");
@@ -50,22 +60,3 @@ class Router {
         die();
     }
 }
-
-
-// function routeToController($uri, $routes) {
-//     if (array_key_exists($uri, $routes)) {
-//         require base_path($routes[$uri]);
-//     }else {
-//         abort();
-//     }
-// }
-
-// function abort() {
-//     http_response_code(404);
-
-//     view("404.php");
-
-//     die();
-// }
-
-
