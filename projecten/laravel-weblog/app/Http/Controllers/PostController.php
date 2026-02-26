@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\post;
+use App\Models\Post;
 use App\Http\Requests\StorepostRequest;
 use App\Http\Requests\UpdatepostRequest;
 
@@ -13,7 +13,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
+        $posts = Post::orderBy('created_at', 'DESC')->get();
 
         return view('posts.index', compact('posts'));
     }
@@ -23,7 +23,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('posts.create');
     }
 
     /**
@@ -31,21 +31,34 @@ class PostController extends Controller
      */
     public function store(StorepostRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        // Post::create($validated)
+
+        Post::create([
+            'title' => $validated['title'],
+            'body' => $validated['body'],
+            'user_id' => "1",
+            'image' => $validated['image'],
+            'premium' => $validated['premium'],
+            'published' => $validated['published'],
+        ]);
+
+        return redirect()->route('posts.index');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(post $post)
+    public function show(Post $post)
     {
-        //
+        return view('posts.show', compact('post'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(post $post)
+    public function edit(Post $post)
     {
         //
     }
@@ -53,7 +66,7 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatepostRequest $request, post $post)
+    public function update(UpdatepostRequest $request, Post $post)
     {
         //
     }
@@ -61,7 +74,7 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(post $post)
+    public function destroy(Post $post)
     {
         //
     }

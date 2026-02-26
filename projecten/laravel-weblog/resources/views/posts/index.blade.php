@@ -3,18 +3,20 @@
 @section('title', 'Posts')
 
 @section('content')
-<h1>Posts</h1>
+<h1 class="center">Alle Posts</h1>
 
 <table>
     <thead>
         <tr>
-            <th>Naam</th>
+            <th>Titel</th>
+            <th>Plaatsing</th>
         </tr>
     </thead>
     <tbody>
         @foreach($posts as $post)
         <tr>
-            <td>{{ $post->title }}</td>
+            <td><a href="{{ route('posts.show', $post) }}">{{ $post->title }}</a></td>
+            <td>{{ $post->created_at }}</td>
         </tr>
         @endforeach
     </tbody>
