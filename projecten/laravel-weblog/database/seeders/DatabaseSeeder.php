@@ -19,11 +19,9 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             PostSeeder::class,
+            CategorySeeder::class,
+            CommentSeeder::class,
+            CategoryPostSeeder::class,
         ]);
-
-        // User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
     }
 }
