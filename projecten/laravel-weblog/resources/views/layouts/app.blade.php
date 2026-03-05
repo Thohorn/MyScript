@@ -7,7 +7,7 @@
 </head>
 
 <body class="center">
-    <div>
+    <div id="main-div">
         @include('partials.nav')
         @yield('content')
     </div>

@@ -4,14 +4,21 @@
   align-items: center;
 }
 
+.beginning {
+  display: flex;
+  justify-content: baseline;
+  align-items: baseline;
+}
+.end {
+  display: flex;
+  justify-content: end;
+  align-items: end;
+}
+
 .error {
   color: red;
   font-size: 12px;
   font-weight: bold;
-}
-
-#comments {
-  margin-top: 50px;
 }
 
 .comment {
@@ -35,4 +42,33 @@
   text-align: right;
   font-size: 12px;
   font-style: italic;
+}
+
+.button {
+  margin: 5px 10px 5px 0px;
+  border: 2px;
+  border-style: solid;
+  border-color: black;
+  color: black;
+}
+
+.active {
+  color: white;
+  background-color: black;
+}
+
+.mw-70 {
+  max-width: 70%;
+}
+.marginlr-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#main-div {
+  width: 100%;
+}
+
+#comments {
+  margin-top: 50px;
 }
