@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Http\Requests\StorepostRequest;
 use App\Http\Requests\UpdatepostRequest;
+use App\Models\Comment;
+use App\Models\User;
 
 class PostController extends Controller
 {
@@ -13,7 +15,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::orderBy('created_at', 'DESC')->get();
+        $posts = Post::orderBy('created_at', 'DESC')->simplePaginate(5);
 
         return view('posts.index', compact('posts'));
     }
@@ -52,7 +54,8 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        return view('posts.show', compact('post'));
+        $comments = Comment::with('user', 'post')->where('post_id', $post->id)->orderBy('created_at', 'DESC')->simplePaginate(5);
+        return view('posts.show', compact('post', 'comments'));
     }
 
     /**

@@ -8,9 +8,11 @@
     @csrf
     <label for="title">Titel:</label>
     <input type="text" id="title" name="title" required>
+    <x-form-error name="title" />
     <br>
     <label for="body">Inhoud:</label>
-    <textarea id="body" name="body"></textarea>
+    <textarea id="body" name="body" required></textarea>
+    <x-form-error name="body" />
     <br>
     <label for="image">Afbeelding:</label>
     <input type="text" id="image" name="image">

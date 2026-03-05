@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 
@@ -14,7 +15,7 @@ Route::controller(PostController::class)->group(function () {
     Route::get('/posts/{post}', 'show')->name('posts.show');
 });
 
-
+Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
 
 
 Route::redirect('/', '/posts');

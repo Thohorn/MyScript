@@ -3,3 +3,36 @@
   justify-content: center;
   align-items: center;
 }
+
+.error {
+  color: red;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+#comments {
+  margin-top: 50px;
+}
+
+.comment {
+  border: 1px;
+  border-style: solid;
+  margin: 10px 0px 10px 0px;
+}
+
+.comment-header {
+  font-weight: bold;
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.comment-body {
+  margin-left: 10px;
+}
+
+.comment-footer {
+  margin-top: 6px;
+  text-align: right;
+  font-size: 12px;
+  font-style: italic;
+}
