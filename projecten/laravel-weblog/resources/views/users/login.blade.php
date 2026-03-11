@@ -4,7 +4,17 @@
 
 @section('content')
 <h1 class="center">Log in.</h1>
-<form method="POST" action="{{ route('users.login') }}">
+<div class="center">
+<form method="POST" action="{{ route('login') }}">
+    @csrf
+    <label for="username">Gebruikersnaam:</label>
+    <input id="username" name="username" :value="old('username')" required>
+    <br>
+    <label for="password">Wachtwoord</label>
+    <input type="password" id="password" name="password" required>
+    <x-form-error name="incorrect" />
+    <br>
     <button type="submit">Login</button>
 </form>
+</div>
 @endsection

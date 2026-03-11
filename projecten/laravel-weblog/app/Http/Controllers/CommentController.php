@@ -6,6 +6,7 @@ use App\Models\Comment;
 use App\Http\Requests\StorecommentRequest;
 use App\Http\Requests\UpdatecommentRequest;
 use App\Models\Post;
+use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
@@ -34,7 +35,7 @@ class CommentController extends Controller
 
         Comment::create([
             'body' => $validated['body'],
-            'user_id' => '1',
+            'user_id' => Auth::id(),
             'post_id' => $validated['post_id'],
         ]);
 

@@ -3,9 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content')
-<h1 class="center">Hallo gebruiker.</h1>
-<form method="POST" action="{{ route('users.logout') }}">
-    @csrf
-    <button type="submit">Logout</button>
-</form>
+    <h1 class="center">Hallo {{ Auth::user()->username}}</h1>
+    <div class="center">Jouw posts: <br></div>
+    <x-posts-overview :posts="$posts"/>
 @endsection

@@ -5,15 +5,16 @@
     </div>
     <div class="end">
         @guest
-        <x-nav-button href="{{ route('users.register.show') }}" :active="request()->is('users/register')">Registreer</x-nav-button>
-        <br>
-        <x-nav-button href="{{ route('users.login') }}" :active="request()->is('users/login')">Log In</x-nav-button>
+            <x-nav-button href="{{ route('users.register.show') }}" :active="request()->is('users/register')">Registreer</x-nav-button>
+            <br>
+            <x-nav-button href="{{ route('login') }}" :active="request()->is('users/login')">Log In</x-nav-button>
         @endguest
         @auth
-        <form method="POST" action="{{ route('users.logout') }}">
-            @csrf
-            <button type="submit">Logout</button>
-        </form>
+            <x-nav-button href="{{ route('users.index') }}" :active="request()->is('users/dashboard')">Dashboard</x-nav-button>
+            <form method="POST" action="{{ route('users.logout') }}">
+                @csrf
+                <button type="submit">Logout</button>
+            </form>
         @endauth
     </div>
 </nav>

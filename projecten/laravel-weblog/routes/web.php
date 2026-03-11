@@ -1,10 +1,10 @@
 <?php
 
 use App\Http\Controllers\CommentController;
-use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
@@ -19,12 +19,21 @@ Route::controller(PostController::class)->group(function () {
     Route::get('/posts/{post}', 'show')->name('posts.show');
 });
 
+Route::controller(UserController::class)->group(function () {
+    Route::get('/users', 'index')
+        ->middleware('auth')
+        ->name('users.index');
+});
+
+
+
 Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
 
-Route::view('/users/dashboard', 'users.dashboard')->name('users.dashboard');
+Route::view('/users/login', 'users.login')->name('login');
 
-Route::view('/users/login', 'users.login')->name('users.login');
-Route::post('/users/login', [LoginController::class, 'authenticate'])->name('users.login.authenticate');
+Route::post('/users/login', [UserController::class, 'authenticate'])
+    ->middleware('throttle:5,1')
+    ->name('users.login.authenticate');
 
 Route::post('logout', function () {
     Auth::guard('web')->logout();

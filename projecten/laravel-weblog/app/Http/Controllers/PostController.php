@@ -6,7 +6,7 @@ use App\Models\Post;
 use App\Http\Requests\StorepostRequest;
 use App\Http\Requests\UpdatepostRequest;
 use App\Models\Comment;
-use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -40,7 +40,7 @@ class PostController extends Controller
         Post::create([
             'title' => $validated['title'],
             'body' => $validated['body'],
-            'user_id' => "1",
+            'user_id' => Auth::id(),
             'image' => $validated['image'],
             'premium' => $validated['premium'],
             'published' => $validated['published'],

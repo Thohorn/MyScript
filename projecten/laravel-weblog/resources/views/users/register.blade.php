@@ -10,12 +10,15 @@
         @csrf
         <label for="username">Gebruikersnaam:</label>
         <input id="username" name="username" :value="old('username')" required>
+        <x-form-error name="username" />
         <br>
         <label id='email' name='email' :value="old('email')" required>Email-adres</Email-adres></label>
         <input type="email" name="email" id="email">
+        <x-form-error name="email" />
         <br>
         <label for="password">Wachtwoord</label>
         <input type="password" id="password" name="password" required>
+        <x-form-error name="password" />
         <br>
         <button type="submit">Registreer</button>
     </form>
