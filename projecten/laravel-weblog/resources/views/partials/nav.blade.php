@@ -9,5 +9,11 @@
         <br>
         <x-nav-button href="{{ route('users.login') }}" :active="request()->is('users/login')">Log In</x-nav-button>
         @endguest
+        @auth
+        <form method="POST" action="{{ route('users.logout') }}">
+            @csrf
+            <button type="submit">Logout</button>
+        </form>
+        @endauth
     </div>
 </nav>
