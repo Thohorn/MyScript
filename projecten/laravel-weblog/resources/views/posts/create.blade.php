@@ -18,6 +18,12 @@
         <label for="image">Afbeelding:</label>
         <input type="text" id="image" name="image">
         <br>
+        <select name="category_id[]" id="category" multiple required>
+            @foreach($categories as $category)
+            <option value="{{ $category->id }}">{{ $category->name }}</option>
+            @endforeach
+        </select>
+        <br>
         <label for="premium">Premium:</label>
         <input type="checkbox" id="premium" name="premium" value="0" checked hidden>
         <input type="checkbox" id="premium" name="premium" value="1">

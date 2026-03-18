@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Http\Requests\StorepostRequest;
 use App\Http\Requests\UpdatepostRequest;
+use App\Models\Category;
 use App\Models\Comment;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 
 class PostController extends Controller
 {
@@ -15,7 +17,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::orderBy('created_at', 'DESC')->simplePaginate(5);
+        $posts = Post::with('categories')->orderBy('created_at', 'DESC')->simplePaginate(5);
 
         return view('posts.index', compact('posts'));
     }
@@ -25,7 +27,9 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('posts.create');
+        $categories = Category::orderBy('name', 'ASC')->get();
+
+        return view('posts.create', compact('categories'));
     }
 
     /**
@@ -35,9 +39,7 @@ class PostController extends Controller
     {
         $validated = $request->validated();
 
-        // Post::create($validated)
-
-        Post::create([
+        $post = Post::create([
             'title' => $validated['title'],
             'body' => $validated['body'],
             'user_id' => Auth::id(),
@@ -46,7 +48,15 @@ class PostController extends Controller
             'published' => $validated['published'],
         ]);
 
-        return redirect()->route('posts.index');
+        if ($request->category_id != null)
+        {
+            foreach ($request->category_id as $category)
+            {
+                $post->categories()->attach($category);
+            }
+        }
+
+        return redirect()->route('posts.show', $post);
     }
 
     /**
@@ -63,7 +73,22 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        $categories = Category::orderBy('name', 'ASC')->get();
+        
+        $values = [];
+
+        // Just checking to see what works.
+        foreach($categories as $category)
+        {
+            foreach($post->categories->toArray() as $postCat)
+            {
+                array_push($values, $category->toArray()['id'] === $postCat['id'] ? "selected" : "");
+            }
+            
+        }
+        dd($values);
+        
+        return view('posts.edit', compact('post', 'categories'));
     }
 
     /**
@@ -71,7 +96,11 @@ class PostController extends Controller
      */
     public function update(UpdatepostRequest $request, Post $post)
     {
-        //
+        $validated = $request->validated();
+
+        $post->update($validated);
+        
+        return redirect(route('posts.show', $post));
     }
 
     /**
@@ -79,6 +108,8 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $post->delete();
+
+        return redirect(route('users.index'));
     }
 }

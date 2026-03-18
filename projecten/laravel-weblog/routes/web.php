@@ -1,12 +1,12 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
-use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
+
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -14,37 +14,56 @@ Route::get('/', function () {
 
 Route::controller(PostController::class)->group(function () {
     Route::get('/posts', 'index')->name('posts.index');
-    Route::get('/posts/create', 'create')->name('posts.create');
+    
+    Route::get('/posts/create', 'create')
+        ->middleware('auth')
+        ->name('posts.create');
+    
     Route::post('/posts', 'store')->name('posts.store');
     Route::get('/posts/{post}', 'show')->name('posts.show');
-});
+
+    Route::get('/posts/{post}/edit', "edit")
+        ->middleware('auth')
+        ->can('update', 'post')
+        ->name('posts.edit');
+
+    Route::patch('/posts/{post}', "update")
+        ->middleware('auth')
+        ->can('update', 'post')
+        ->name('posts.update');
+
+    Route::delete('/posts/{post}', "destroy")
+        ->middleware('auth')
+        ->can('delete', 'post')
+        ->name('posts.destroy');
+    });
 
 Route::controller(UserController::class)->group(function () {
     Route::get('/users', 'index')
         ->middleware('auth')
         ->name('users.index');
-});
 
-
-
-Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
-
-Route::view('/users/login', 'users.login')->name('login');
-
-Route::post('/users/login', [UserController::class, 'authenticate'])
+    Route::post('/users/login', 'authenticate')
     ->middleware('throttle:5,1')
     ->name('users.login.authenticate');
 
-Route::post('logout', function () {
-    Auth::guard('web')->logout();
+    Route::get('/users/login', 'login')->name('login');
+    Route::post('logout', 'logout')->name('users.logout');
 
-    Session::invalidate();
-    Session::regenerateToken();
+    Route::get('/users/register', 'create')->name('users.create');
+    Route::post('/users/register', 'store')->name('users.store');
+});
 
-    return redirect('/');
-})->name('users.logout');
+Route::controller(CategoryController::class)->group(function(){
+    Route::get('/categories', 'index')->name('categories.index');
 
-Route::view('/users/register', 'users.register')->name('users.register.show');
-Route::post('/users/register', [RegisterController::class, 'store'])->name('users.register.store');
+    Route::get('/categories/create', 'create')
+        ->middleware('auth')
+        ->name('categories.create');
+    
+    Route::post('/categories', 'store')->name('categories.store');
+});
+
+Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
 
 Route::redirect('/', '/posts');

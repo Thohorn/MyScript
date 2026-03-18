@@ -6,7 +6,7 @@
 
 <h1 class="center">Registreren.</h1>
 <div class="center">
-    <form method="POST" action="{{ route('users.register.store') }}">
+    <form method="POST" action="{{ route('users.store') }}">
         @csrf
         <label for="username">Gebruikersnaam:</label>
         <input id="username" name="username" :value="old('username')" required>
