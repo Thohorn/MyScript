@@ -48,10 +48,8 @@ class PostController extends Controller
             'published' => $validated['published'],
         ]);
 
-        if ($request->category_id != null)
-        {
-            foreach ($request->category_id as $category)
-            {
+        if ($request->category_id != null) {
+            foreach ($request->category_id as $category) {
                 $post->categories()->attach($category);
             }
         }
@@ -74,20 +72,7 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         $categories = Category::orderBy('name', 'ASC')->get();
-        
-        $values = [];
 
-        // Just checking to see what works.
-        foreach($categories as $category)
-        {
-            foreach($post->categories->toArray() as $postCat)
-            {
-                array_push($values, $category->toArray()['id'] === $postCat['id'] ? "selected" : "");
-            }
-            
-        }
-        dd($values);
-        
         return view('posts.edit', compact('post', 'categories'));
     }
 
@@ -99,7 +84,7 @@ class PostController extends Controller
         $validated = $request->validated();
 
         $post->update($validated);
-        
+
         return redirect(route('posts.show', $post));
     }
 

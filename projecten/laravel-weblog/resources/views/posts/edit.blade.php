@@ -9,7 +9,7 @@
         @csrf
         @method('PATCH')
         <label for="title">Titel:</label>
-        <input 
+        <input
             type="text"
             id="title"
             name="title"
@@ -18,32 +18,44 @@
         <x-form-error name="title" />
         <br>
         <label for="body">Inhoud:</label>
-        <textarea 
+        <textarea
             id="body"
             name="body"
             required>{{ $post->body }}</textarea>
         <x-form-error name="body" />
         <br>
         <label for="image">Afbeelding:</label>
-        <input 
+        <input
             type="text"
-            id="image" 
+            id="image"
             name="image"
-            value="<?= $post->image ? $post->image: ''?>">
+            value="<?= $post->image ? $post->image : '' ?>">
         <br>
         <select name="category_id" id="category" multiple required>
             @foreach($categories as $category)
-            <option value="{{ $category->id }}" <?php $post->categories->search($category) != false ? "selected" : "" ?>>{{ $category->name }}</option>
+            <option value="{{ $category->id }}"
+                <?php
+                $notSet = false;
+                foreach ($post->categories->toArray() as $postCategory) {
+                    if ($postCategory['id'] === $category['id']) {
+                        echo 'selected';
+                        $notSet = false;
+                    }
+                }
+                if ($notSet) {
+                    echo '';
+                }
+                ?>>{{ $category->name }}</option>
             @endforeach
         </select>
         <br>
         <label for="premium">Premium:</label>
         <input type="checkbox" id="premium" name="premium" value="0" checked hidden>
-        <input type="checkbox" id="premium" name="premium" value="1" <?= $post->premium ? "checked" : ""?>>
+        <input type="checkbox" id="premium" name="premium" value="1" <?= $post->premium ? "checked" : "" ?>>
         <br>
         <label for="published">Gepubliceerd</label>
         <input type="checkbox" id="published" name="published" value="0" checked hidden>
-        <input type="checkbox" id="published" name="published" value="1" <?= $post->published ? "checked" : ""?>>
+        <input type="checkbox" id="published" name="published" value="1" <?= $post->published ? "checked" : "" ?>>
         <br>
         <button type="submit">Bewerken</button>
     </form>
