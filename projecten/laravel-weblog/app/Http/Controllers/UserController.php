@@ -23,12 +23,12 @@ class UserController extends Controller
         if (! Auth::attempt($credentials)) {
             throw ValidationException::withMessages([
                 'incorrect' => 'De inloggegevens zijn onjuist.',
-            ]);    
+            ]);
         }
-        
+
         $request->session()->regenerate();
 
-        
+
         return redirect()->route('users.index');
     }
 
@@ -50,6 +50,7 @@ class UserController extends Controller
     public function index()
     {
         $posts = Post::orderBy('created_at', 'DESC')->where('user_id', Auth::id())->simplePaginate(5);
+
         return view('users.dashboard', compact('posts'));
     }
 
@@ -58,7 +59,7 @@ class UserController extends Controller
     {
         return view('users.create');
     }
-    
+
     public function store(Request $request)
     {
         $validated = $request->validate([

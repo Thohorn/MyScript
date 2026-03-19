@@ -11,6 +11,7 @@
         <input type="text" id="name" name="name" required>
         <x-form-error name="name" />
         <br>
+
         <button type="submit">Opslaan</button>
     </form>
 </div>

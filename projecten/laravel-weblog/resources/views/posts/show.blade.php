@@ -4,6 +4,7 @@
 
 @section('content')
 <div class="mw-70 marginlr-auto">
+
     <div id="post">
         <h1 class="center">{{ $post->title }}</h1>
         <p class="center">{{ $post->body }}</p>
@@ -11,6 +12,7 @@
             <image src="{{ $post->image }}"></image>
         </div>
     </div>
+
     <div id="comments">
         @foreach($comments as $comment)
         <div class="comment">
@@ -40,6 +42,8 @@
                 <button type="submit">Plaats commentaar</button>
             </form>
         </div>
+
     </div>
+
 </div>
 @endsection

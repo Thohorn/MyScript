@@ -9,7 +9,6 @@ use App\Models\Category;
 use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\ValidationException;
 
 class PostController extends Controller
 {
@@ -68,7 +67,11 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        $comments = Comment::with('user', 'post')->where('post_id', $post->id)->orderBy('created_at', 'DESC')->simplePaginate(5);
+        $comments = Comment::with('user', 'post')
+            ->where('post_id', $post->id)
+            ->orderBy('created_at', 'DESC')
+            ->simplePaginate(5);
+
         return view('posts.show', compact('post', 'comments'));
     }
 

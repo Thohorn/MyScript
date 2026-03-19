@@ -17,6 +17,7 @@
             required>
         <x-form-error name="title" />
         <br>
+
         <label for="body">Inhoud:</label>
         <textarea
             id="body"
@@ -24,6 +25,7 @@
             required>{{ $post->body }}</textarea>
         <x-form-error name="body" />
         <br>
+
         <label for="image">Afbeelding:</label>
         <input
             type="text"
@@ -31,6 +33,7 @@
             name="image"
             value="<?= $post->image ? $post->image : '' ?>">
         <br>
+
         <select name="category_id" id="category" multiple required>
             @foreach($categories as $category)
             <option value="{{ $category->id }}"
@@ -49,14 +52,17 @@
             @endforeach
         </select>
         <br>
+
         <label for="premium">Premium:</label>
         <input type="checkbox" id="premium" name="premium" value="0" checked hidden>
         <input type="checkbox" id="premium" name="premium" value="1" <?= $post->premium ? "checked" : "" ?>>
         <br>
+
         <label for="published">Gepubliceerd</label>
         <input type="checkbox" id="published" name="published" value="0" checked hidden>
         <input type="checkbox" id="published" name="published" value="1" <?= $post->published ? "checked" : "" ?>>
         <br>
+
         <button type="submit">Bewerken</button>
     </form>
 </div>
