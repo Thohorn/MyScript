@@ -7,6 +7,7 @@ use App\Http\Requests\StorepostRequest;
 use App\Http\Requests\UpdatepostRequest;
 use App\Models\Category;
 use App\Models\Comment;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
@@ -15,11 +16,16 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $posts = Post::with('categories')->orderBy('created_at', 'DESC')->simplePaginate(5);
+        $posts = Post::with('categories')
+            ->when($request->category, fn($query, $category) => $query->whereRelation('categories', 'name', $category))
+            ->orderBy('created_at', 'DESC')
+            ->simplePaginate(5);
 
-        return view('posts.index', compact('posts'));
+        $categories = Category::orderBy('name', 'ASC')->get();
+
+        return view('posts.index', compact('posts', 'categories'));
     }
 
     /**

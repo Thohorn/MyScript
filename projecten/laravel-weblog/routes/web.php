@@ -14,11 +14,11 @@ Route::get('/', function () {
 
 Route::controller(PostController::class)->group(function () {
     Route::get('/posts', 'index')->name('posts.index');
-    
+
     Route::get('/posts/create', 'create')
         ->middleware('auth')
         ->name('posts.create');
-    
+
     Route::post('/posts', 'store')->name('posts.store');
     Route::get('/posts/{post}', 'show')->name('posts.show');
 
@@ -36,7 +36,7 @@ Route::controller(PostController::class)->group(function () {
         ->middleware('auth')
         ->can('delete', 'post')
         ->name('posts.destroy');
-    });
+});
 
 Route::controller(UserController::class)->group(function () {
     Route::get('/users', 'index')
@@ -44,8 +44,8 @@ Route::controller(UserController::class)->group(function () {
         ->name('users.index');
 
     Route::post('/users/login', 'authenticate')
-    ->middleware('throttle:5,1')
-    ->name('users.login.authenticate');
+        ->middleware('throttle:5,1')
+        ->name('users.login.authenticate');
 
     Route::get('/users/login', 'login')->name('login');
     Route::post('logout', 'logout')->name('users.logout');
@@ -54,13 +54,13 @@ Route::controller(UserController::class)->group(function () {
     Route::post('/users/register', 'store')->name('users.store');
 });
 
-Route::controller(CategoryController::class)->group(function(){
+Route::controller(CategoryController::class)->group(function () {
     Route::get('/categories', 'index')->name('categories.index');
 
     Route::get('/categories/create', 'create')
         ->middleware('auth')
         ->name('categories.create');
-    
+
     Route::post('/categories', 'store')->name('categories.store');
 });
 

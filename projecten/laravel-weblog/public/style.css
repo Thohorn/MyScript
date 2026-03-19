@@ -6,8 +6,8 @@
 
 .beginning {
   display: flex;
-  justify-content: baseline;
-  align-items: baseline;
+  justify-content: left;
+  align-items: left;
 }
 .end {
   display: flex;

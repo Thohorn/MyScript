@@ -4,6 +4,6 @@
 
 @section('content')
 <h1 class="center">Alle Posts</h1>
-
-<x-posts-overview :posts="$posts"/>
+<x-category-filter :categories="$categories" />
+<x-posts-overview :posts="$posts" />
 @endsection
