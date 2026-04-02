@@ -24,9 +24,10 @@ class StorepostRequest extends FormRequest
         return [
             'title' => 'required|max:255',
             'body' => 'required',
-            'image' => 'sometimes|nullable',
+            'image' => 'sometimes|nullable|image',
             'premium' => 'required|boolean',
             'published' => 'required|boolean',
+            'category_id' => 'sometimes|array|exists:App\Models\Category,id',
         ];
     }
 }

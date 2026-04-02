@@ -14,7 +14,7 @@
     </div>
 
     <div id="comments">
-        @foreach($comments as $comment)
+        @foreach($post->comments as $comment)
         <div class="comment">
             <div class="comment-header">
                 {{ $comment->user->username}}
@@ -28,7 +28,7 @@
         </div>
         @endforeach
 
-        {{ $comments->links() }}
+
 
         <div id="add-comment" class="center">
             <form method="POST" action="/comments">

@@ -4,6 +4,10 @@
   align-items: center;
 }
 
+.form-element {
+  margin-bottom: 10px;
+}
+
 .beginning {
   display: flex;
   justify-content: left;

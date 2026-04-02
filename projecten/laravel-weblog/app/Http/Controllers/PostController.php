@@ -17,7 +17,7 @@ class PostController extends Controller
      */
     public function index(Request $request)
     {
-        $posts = Post::with('categories')
+        $posts = Post::with('categories', 'comments')
             ->when($request->category, fn($query, $category) => $query->whereRelation('categories', 'name', $category))
             ->orderBy('created_at', 'DESC')
             ->simplePaginate(5);
@@ -42,22 +42,18 @@ class PostController extends Controller
      */
     public function store(StorepostRequest $request)
     {
+        //  TODO :: korter
+        //  Done
         $validated = $request->validated();
 
-        $post = Post::create([
-            'title' => $validated['title'],
-            'body' => $validated['body'],
-            'user_id' => Auth::id(),
-            'image' => $validated['image'],
-            'premium' => $validated['premium'],
-            'published' => $validated['published'],
-        ]);
+        $category_ids = array_pop($validated);
+        $validated['user_id'] = Auth::id();
 
-        if ($request->category_id != null) {
-            foreach ($request->category_id as $category) {
-                $post->categories()->attach($category);
-            }
-        }
+        $post = Post::create($validated);
+
+        // TODO :: category_id ook valideren ->sync()
+        // Done
+        $post->categories()->sync($category_ids);
 
         return redirect()->route('posts.show', $post);
     }
@@ -67,12 +63,9 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        $comments = Comment::with('user', 'post')
-            ->where('post_id', $post->id)
-            ->orderBy('created_at', 'DESC')
-            ->simplePaginate(5);
-
-        return view('posts.show', compact('post', 'comments'));
+        // TODO :: post met de comment terug geven?
+        // Done
+        return view('posts.show', compact('post'));
     }
 
     /**
@@ -91,8 +84,13 @@ class PostController extends Controller
     public function update(UpdatepostRequest $request, Post $post)
     {
         $validated = $request->validated();
+        $category_ids = array_pop($validated);
 
         $post->update($validated);
+
+        // TODO :: ->sync()
+        // Done
+        $post->categories()->sync($category_ids);
 
         return redirect(route('posts.show', $post));
     }

@@ -7,36 +7,43 @@
 <div class="center">
     <form method="POST" action="/posts">
         @csrf
-        <label for="title">Titel:</label>
-        <input type="text" id="title" name="title" required>
-        <x-form-error name="title" />
-        <br>
+        <div class="form-element">
+            <label for="title">Titel:</label>
+            <input type="text" id="title" name="title" required>
+            <x-form-error name="title" />
+        </div>
 
-        <label for="body">Inhoud:</label>
-        <textarea id="body" name="body" required></textarea>
-        <x-form-error name="body" />
-        <br>
+        <div class="form-element">
+            <label for="body">Inhoud:</label>
+            <textarea id="body" name="body" required></textarea>
+            <x-form-error name="body" />
+        </div>
 
-        <label for="image">Afbeelding:</label>
-        <input type="text" id="image" name="image">
-        <br>
+        <div class="form-element">
+            <label for="image">Afbeelding:</label>
+            <input type="text" id="image" name="image">
+        </div>
 
-        <select name="category_id[]" id="category" multiple required>
-            @foreach($categories as $category)
-            <option value="{{ $category->id }}">{{ $category->name }}</option>
-            @endforeach
-        </select>
-        <br>
+        <div class="form-element">
+            <label for="category_id">Categorie/categoriën</label>
+            <select name="category_id[]" id="category" multiple required>
+                @foreach($categories as $category)
+                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                @endforeach
+            </select>
+        </div>
 
-        <label for="premium">Premium:</label>
-        <input type="checkbox" id="premium" name="premium" value="0" checked hidden>
-        <input type="checkbox" id="premium" name="premium" value="1">
-        <br>
+        <div class="form-element">
+            <label for="premium">Premium:</label>
+            <input type="checkbox" id="premium" name="premium" value="0" checked hidden>
+            <input type="checkbox" id="premium" name="premium" value="1">
+        </div>
 
-        <label for="published">Gepubliceerd</label>
-        <input type="checkbox" id="published" name="published" value="0" checked hidden>
-        <input type="checkbox" id="published" name="published" value="1">
-        <br>
+        <div class="form-element">
+            <label for="published">Gepubliceerd</label>
+            <input type="checkbox" id="published" name="published" value="0" checked hidden>
+            <input type="checkbox" id="published" name="published" value="1">
+        </div>
 
         <button type="submit">Opslaan</button>
     </form>
