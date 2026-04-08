@@ -49,6 +49,10 @@ class PostController extends Controller
         $category_ids = array_pop($validated);
         $validated['user_id'] = Auth::id();
 
+        if($request->image){
+            $validated['image'] = $request->file('image')->store('images', 'public');
+        }
+
         $post = Post::create($validated);
 
         // TODO :: category_id ook valideren ->sync()
@@ -85,6 +89,11 @@ class PostController extends Controller
     {
         $validated = $request->validated();
         $category_ids = array_pop($validated);
+
+        if($request->image){
+            $validated['image'] = $request->file('image')->store('images', 'public');
+            
+        }
 
         $post->update($validated);
 

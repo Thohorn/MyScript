@@ -5,23 +5,24 @@
 @section('content')
 <h1 class="center">Maak Post</h1>
 <div class="center">
-    <form method="POST" action="/posts">
+    <form method="POST" action="/posts" enctype="multipart/form-data">
         @csrf
         <div class="form-element">
             <label for="title">Titel:</label>
-            <input type="text" id="title" name="title" required>
+            <input type="text" id="title" name="title" value="{{ old('title', '') }}" required>
             <x-form-error name="title" />
         </div>
 
         <div class="form-element">
             <label for="body">Inhoud:</label>
-            <textarea id="body" name="body" required></textarea>
+            <textarea id="body" name="body" required>{{ old('body', '') }}</textarea>
             <x-form-error name="body" />
         </div>
 
         <div class="form-element">
             <label for="image">Afbeelding:</label>
-            <input type="text" id="image" name="image">
+            <input type="file" id="image" name="image">
+            <x-form-error name="image" />
         </div>
 
         <div class="form-element">

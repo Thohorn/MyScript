@@ -5,7 +5,7 @@
 @section('content')
 <h1 class="center">Bewerk Post</h1>
 <div class="center">
-    <form method="POST" action="{{ route('posts.update', $post) }}">
+    <form method="POST" action="{{ route('posts.update', $post) }}" enctype="multipart/form-data">
         @csrf
         @method('PATCH')
         <div class="form-element">
@@ -29,12 +29,15 @@
         </div>
 
         <div class="form-element">
-            <label for="image">Afbeelding:</label>
-            <input
-                type="text"
-                id="image"
-                name="image"
-                value="<?= $post->image ? $post->image : '' ?>">
+            <div>Huidige afbeelding: <image src="{{ asset('storage/' . $post->image) }}" width=40 height=40></image></div>
+            <div>
+                <label for="image">Afbeelding veranderen:</label>
+                <input
+                    type="file"
+                    id="image"
+                    name="image"
+                    value="<?= $post->image ? $post->image : '' ?>">
+            </div>
         </div>
 
         <div class="form-element">
