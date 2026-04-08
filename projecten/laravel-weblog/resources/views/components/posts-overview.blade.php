@@ -9,6 +9,7 @@
             <tr>
                 <th>Titel</th>
                 <th>Datum</th>
+                <th>Premium</th>
                 <?php
                 if ($personal == True) { ?>
                     <th>Bewerken</th>
@@ -21,6 +22,7 @@
             <tr>
                 <td><a href="{{ route('posts.show', $post) }}">{{ $post->title }}</a></td>
                 <td>{{ $post->created_at }}</td>
+                <td><?= $post->premium ? "Ja" : "Nee" ?></th>
                 <?php
                 if ($personal == True) { ?>
                     <td><a href="{{ route('posts.edit', $post) }}">Bewerken</a></td>

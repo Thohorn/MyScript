@@ -20,7 +20,10 @@ Route::controller(PostController::class)->group(function () {
         ->name('posts.create');
 
     Route::post('/posts', 'store')->name('posts.store');
-    Route::get('/posts/{post}', 'show')->name('posts.show');
+
+    Route::get('/posts/{post}', 'show')
+        ->can('view' , 'post')
+        ->name('posts.show');
 
     Route::get('/posts/{post}/edit', "edit")
         ->middleware('auth')
@@ -52,6 +55,10 @@ Route::controller(UserController::class)->group(function () {
 
     Route::get('/users/register', 'create')->name('users.create');
     Route::post('/users/register', 'store')->name('users.store');
+
+    Route::patch('/users/{user}', 'update')
+        ->middleware('auth')
+        ->name('users.update');
 });
 
 Route::controller(CategoryController::class)->group(function () {

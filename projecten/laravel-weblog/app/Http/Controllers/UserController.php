@@ -81,4 +81,14 @@ class UserController extends Controller
 
         return redirect()->route('users.index');
     }
+
+    public function update(Request $request, User $user)
+    {
+
+        $user->premium ? $user->premium = false : $user->premium = true;
+
+        $user->save();
+
+        return redirect()->route(('users.index'));
+    }
 }
