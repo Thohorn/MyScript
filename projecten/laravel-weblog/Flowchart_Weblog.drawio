@@ -1,0 +1,66 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Page-1" id="1vWsOn-QT4GjwDU7uFyG">
+    <mxGraphModel dx="1414" dy="797" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="0JyYkqejD2SvEUkxePHk-15" edge="1" parent="1" source="0JyYkqejD2SvEUkxePHk-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="0JyYkqejD2SvEUkxePHk-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="0JyYkqejD2SvEUkxePHk-3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;div&gt;Route&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="354" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="0JyYkqejD2SvEUkxePHk-17" edge="1" parent="1" source="0JyYkqejD2SvEUkxePHk-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="0JyYkqejD2SvEUkxePHk-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="0JyYkqejD2SvEUkxePHk-25" edge="1" parent="1" source="0JyYkqejD2SvEUkxePHk-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="0JyYkqejD2SvEUkxePHk-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="0JyYkqejD2SvEUkxePHk-4" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Controller" vertex="1">
+          <mxGeometry height="60" width="120" x="354" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="0JyYkqejD2SvEUkxePHk-19" edge="1" parent="1" source="0JyYkqejD2SvEUkxePHk-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="0JyYkqejD2SvEUkxePHk-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="0JyYkqejD2SvEUkxePHk-7" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;div&gt;Model&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="354" y="380" as="geometry" />
+        </mxCell>
+        <mxCell id="0JyYkqejD2SvEUkxePHk-24" edge="1" parent="1" source="0JyYkqejD2SvEUkxePHk-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="0JyYkqejD2SvEUkxePHk-4">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="640" y="530" />
+              <mxPoint x="640" y="280" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0JyYkqejD2SvEUkxePHk-8" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Database" vertex="1">
+          <mxGeometry height="60" width="120" x="354" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="0JyYkqejD2SvEUkxePHk-10" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Show newly created post" vertex="1">
+          <mxGeometry height="60" width="120" x="30" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="0JyYkqejD2SvEUkxePHk-12" edge="1" parent="1" source="0JyYkqejD2SvEUkxePHk-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="0JyYkqejD2SvEUkxePHk-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="0JyYkqejD2SvEUkxePHk-11" parent="1" style="rhombus;whiteSpace=wrap;html=1;" value="Start" vertex="1">
+          <mxGeometry height="80" width="80" x="374" as="geometry" />
+        </mxCell>
+        <mxCell id="0JyYkqejD2SvEUkxePHk-13" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;div&gt;HTTP Request POST&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="30" width="140" x="410" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="0JyYkqejD2SvEUkxePHk-16" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Go to update in the controller" vertex="1">
+          <mxGeometry height="30" width="200" x="400" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="0JyYkqejD2SvEUkxePHk-18" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Validate data and create new model" vertex="1">
+          <mxGeometry height="30" width="210" x="410" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="0JyYkqejD2SvEUkxePHk-20" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Save model data in database" vertex="1">
+          <mxGeometry height="30" width="180" x="410" y="460" as="geometry" />
+        </mxCell>
+        <mxCell id="0JyYkqejD2SvEUkxePHk-22" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;div&gt;HTTP Response redirect&lt;/div&gt;" vertex="1">
+          <mxGeometry height="30" width="160" x="170" y="240" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

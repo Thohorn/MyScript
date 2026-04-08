@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreuserRequest;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -60,23 +61,13 @@ class UserController extends Controller
         return view('users.create');
     }
 
-    public function store(Request $request)
+    public function store(StoreuserRequest $request)
     {
-        $validated = $request->validate([
-            'username' => ['required', 'unique:users'],
-            'email' => ['required', 'email', 'unique:users'],
-            'password' => ['required'],
-        ]);
+        $validated = $request->validated();
+        $validated['role'] = "user";
+        $validated['premium'] = false;
 
-        $validated['password'] = bcrypt($validated['password']);
-
-        $user = User::create([
-            'username' => $validated['username'],
-            'password' => $validated['password'],
-            'email' => $validated['email'],
-            'role' => "user",
-            'premium' => false,
-        ]);
+        $user = User::create($validated);
         Auth::login($user);
 
         return redirect()->route('users.index');
