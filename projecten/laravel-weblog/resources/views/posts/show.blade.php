@@ -29,7 +29,7 @@
         @endforeach
 
 
-
+        @auth
         <div id="add-comment" class="center">
             <form method="POST" action="/comments">
                 @csrf
@@ -42,6 +42,7 @@
                 <button type="submit">Plaats commentaar</button>
             </form>
         </div>
+        @endauth
 
     </div>
 

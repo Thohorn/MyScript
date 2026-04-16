@@ -6,6 +6,8 @@ use App\Models\Comment;
 use App\Http\Requests\StorecommentRequest;
 use App\Http\Requests\UpdatecommentRequest;
 use App\Models\Post;
+use App\Models\User;
+use App\Notifications\CommentPosted;
 use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
@@ -39,7 +41,13 @@ class CommentController extends Controller
             'post_id' => $validated['post_id'],
         ]);
 
-        return redirect()->route('posts.show', [Post::find($validated['post_id'])]);
+
+        $post = Post::find($validated['post_id']);
+        $poster = User::find($post['user_id']);
+
+        $poster->notify(new CommentPosted($post));
+
+        return redirect()->route('posts.show', [$post]);
     }
 
     /**
