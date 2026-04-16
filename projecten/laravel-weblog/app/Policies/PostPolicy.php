@@ -19,9 +19,9 @@ class PostPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Post $post)
+    public function view(?User $user, Post $post)
     {
-        return $post->premium && !$user->premium
+        return $post->premium && !optional($user)->premium
             ? Response::deny('Je moet premium hebben.')
             : Response::allow();
     }
