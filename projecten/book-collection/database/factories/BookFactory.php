@@ -21,7 +21,7 @@ class BookFactory extends Factory
         return [
             'title' => fake()->words(rand(1, 5), true),
             'author_id' => Author::inRandomOrder()->first()->id,
-            'description' => fake()->paragraph(),
+            'summary' => fake()->paragraph(),
         ];
     }
 }
