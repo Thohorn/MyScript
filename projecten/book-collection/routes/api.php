@@ -17,4 +17,10 @@ Route::controller(BookController::class)->group(function() {
     Route::delete('/books/{book}', 'destroy');
 });
 
-Route::get('/authors', [AuthorController::class, 'index']);
+Route::controller(AuthorController::class)->group(function() {
+    Route::get('/authors', 'index');
+    Route::post('/authors', 'store');
+    Route::put('/authors/{author}', 'update');
+    Route::delete('/authors/{author}', 'destroy');
+});
+

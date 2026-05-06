@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted } from 'vue';
-import { fetchAuthors, getAllAuthors } from '../store';
+import { deleteAuthor, fetchAuthors, getAllAuthors } from '../store';
 
 
 fetchAuthors();
@@ -15,6 +15,8 @@ fetchAuthors();
         </tr>
         <tr v-for="author in getAllAuthors" :key="author.id">
             <td>{{ author.name }}</td>
+            <td><RouterLink :to="{ name: 'authors.edit', params: { id: author.id } }">Bewerk</RouterLink></td>
+            <td><button @click="deleteAuthor(author.id)">Verwijder</button></td>
         </tr>
     </table>
 </template>

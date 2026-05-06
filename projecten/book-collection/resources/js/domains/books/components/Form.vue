@@ -11,6 +11,7 @@ const emit = defineEmits(['submit']);
 
 const form = ref({ ...props.book });
 
+
 const handleSubmit = () => emit('submit', form.value);
 </script>
 
