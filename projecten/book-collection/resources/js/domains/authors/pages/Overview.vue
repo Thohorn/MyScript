@@ -1,6 +1,7 @@
 <script setup>
 import { onMounted } from 'vue';
 import { deleteAuthor, fetchAuthors, getAllAuthors } from '../store';
+import ErrorMessage from '../../../components/errorMessage.vue';
 
 
 fetchAuthors();
@@ -9,6 +10,7 @@ fetchAuthors();
 
 
 <template>
+    <ErrorMessage />
         <table>
         <tr>
             <th>Name</th>
