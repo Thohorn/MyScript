@@ -18,3 +18,9 @@ export const updateBook = async (id, updatedBook) => {
 export const deleteBook = async (id) => {
     await bookStore.actions.delete(id);
 }
+
+const reviewStore = storeModuleFactory('reviews');
+
+export const createReview = async (newReview) => {
+    await reviewStore.actions.create(newReview);
+}

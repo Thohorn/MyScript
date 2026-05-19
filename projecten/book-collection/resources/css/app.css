@@ -14,6 +14,32 @@
     color: red;
 }
 
+.m-20 {
+    margin: 20px;
+}
+
 .book-review {
-    margin-top: 10px;
+    margin: 20px;
+}
+
+.book-summary {
+    margin: 20px;
+}
+
+.link {
+    font-weight: bold;
+    font-style: italic;
+}
+
+.link:hover {
+    color: hotpink;
+    font-weight: bolder;
+}
+
+.center {
+    text-align: center;
+}
+
+nav {
+    text-align: center;
 }

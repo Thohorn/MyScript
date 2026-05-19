@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\ReviewController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -24,3 +25,6 @@ Route::controller(AuthorController::class)->group(function() {
     Route::delete('/authors/{author}', 'destroy');
 });
 
+Route::controller(ReviewController::class)->group(function() {
+    Route::post('/reviews', 'store');
+});
