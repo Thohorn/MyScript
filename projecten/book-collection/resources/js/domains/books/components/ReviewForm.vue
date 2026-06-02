@@ -10,7 +10,12 @@ const emit = defineEmits(['submit']);
 const form = ref({ ...props.review });
 
 
-const handleSubmit = () => emit('submit', form.value);
+const handleSubmit = () => {
+    emit('submit', form.value);
+    form.value.title = '';
+    form.value.body = '';
+};
+
 </script>
 
 <template>

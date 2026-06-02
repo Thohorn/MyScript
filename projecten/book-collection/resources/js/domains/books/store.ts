@@ -21,6 +21,14 @@ export const deleteBook = async (id) => {
 
 const reviewStore = storeModuleFactory('reviews');
 
+export const fetchReviews = () => reviewStore.actions.getAll();
+
+export const getAllReviews = reviewStore.getters.all;
+
 export const createReview = async (newReview) => {
     await reviewStore.actions.create(newReview);
+}
+
+export const deleteReview = async (id) => {
+    await reviewStore.actions.delete(id);
 }

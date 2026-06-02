@@ -26,5 +26,7 @@ Route::controller(AuthorController::class)->group(function() {
 });
 
 Route::controller(ReviewController::class)->group(function() {
+    Route::get('/reviews', 'index');
     Route::post('/reviews', 'store');
+    Route::delete('/reviews/{review}', 'destroy');
 });

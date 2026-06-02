@@ -25,7 +25,7 @@ class StoreReviewRequest extends FormRequest
         return [
             'title' => 'required|string|max:255',
             'body' => 'required|string',
-            'id' => 'required|integer',
+            'book_id' => 'required|integer',
         ];
     }
 }
