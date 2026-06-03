@@ -15,13 +15,12 @@ const book = getBookById(route.params.id);
 
 const reviews = computed(() => {
     const allReviews = getAllReviews;
-
-    // const bookReviews = Object.entries(allReviews.value).filter((review) => review[1]['book_id'] === Number(route.params.id)).map((review) => review[1]);
+    const allReviewsArray = Object.entries(allReviews.value).map((review) => review[1]);
 
     const bookReviews = [];
-    for (let review in allReviews.value) {
-        if (allReviews.value[review]['book_id'] === Number(route.params.id)) {
-            bookReviews.push(allReviews.value[review]);
+    for (let review of allReviewsArray) {
+        if (review.book_id === Number(route.params.id)) {
+            bookReviews.push(review);
         }
     }
     
@@ -58,7 +57,7 @@ const handleEditClick = (reviewId, elementId) => {
 </script>
 
 <template>
-    <div class="center">
+    <div v-if="book" class="center">
         <div class="book-summary">
             <h2>Title: {{ book.title }}</h2>
             {{ book.summary }}

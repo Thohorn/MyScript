@@ -1,6 +1,7 @@
 <script setup>
 import { onMounted } from 'vue';
 import { fetchBooks, getAllBooks, deleteBook } from '../store';
+import ErrorMessage from '../../../components/errorMessage.vue';
 
 
 fetchBooks();
@@ -9,6 +10,7 @@ fetchBooks();
 
 
 <template>
+    <ErrorMessage />
         <table>
         <tr>
             <th>Title</th>
