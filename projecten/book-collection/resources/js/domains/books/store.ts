@@ -24,9 +24,14 @@ const reviewStore = storeModuleFactory('reviews');
 export const fetchReviews = () => reviewStore.actions.getAll();
 
 export const getAllReviews = reviewStore.getters.all;
+export const getReviewById = (id) => reviewStore.getters.getById(id);
 
 export const createReview = async (newReview) => {
     await reviewStore.actions.create(newReview);
+}
+
+export const updateReview = async (id, updatedReview) => {
+    await reviewStore.actions.update(id, updatedReview);
 }
 
 export const deleteReview = async (id) => {

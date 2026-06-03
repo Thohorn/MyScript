@@ -12,8 +12,10 @@ const form = ref({ ...props.review });
 
 const handleSubmit = () => {
     emit('submit', form.value);
-    form.value.title = '';
-    form.value.body = '';
+    if (!form.value.id){
+        form.value.title = '';
+        form.value.body = '';
+    }
 };
 
 </script>

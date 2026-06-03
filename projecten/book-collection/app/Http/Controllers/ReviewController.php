@@ -21,6 +21,13 @@ class ReviewController extends Controller
         return ReviewResource::collection($reviews);
     }
 
+    public function update(StoreReviewRequest $request, Review $review) {
+        $review->update($request->validated());
+
+        $reviews = Review::all();
+        return ReviewResource::collection($reviews);
+    }
+
     public function destroy(Review $review) {
         $review->delete();
         return response()->json(['message' => 'Review succesvol verwijderd']);

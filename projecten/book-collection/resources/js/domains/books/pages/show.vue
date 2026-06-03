@@ -1,24 +1,30 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import { useRoute } from 'vue-router';
-import { fetchBooks, getBookById, fetchReviews, getAllReviews, createReview, deleteReview } from '../store';
+import { fetchBooks, getBookById, fetchReviews, getAllReviews, createReview, deleteReview, getReviewById, updateReview } from '../store';
 import ReviewForm from '../components/ReviewForm.vue';
 
 fetchBooks();
 fetchReviews();
 
+const edit = ref("");
+
 const route = useRoute();
 
 const book = getBookById(route.params.id);
+
 const reviews = computed(() => {
-    let allReviews = getAllReviews;
-    let bookReviews = [];
+    const allReviews = getAllReviews;
+
+    // const bookReviews = Object.entries(allReviews.value).filter((review) => review[1]['book_id'] === Number(route.params.id)).map((review) => review[1]);
+
+    const bookReviews = [];
     for (let review in allReviews.value) {
-        if (allReviews.value[review]['book_id'] === route.params.id) {
-            bookReviews.push(review);
+        if (allReviews.value[review]['book_id'] === Number(route.params.id)) {
+            bookReviews.push(allReviews.value[review]);
         }
     }
-    console.log(bookReviews);
+    
     return bookReviews;
 });
 
@@ -29,16 +35,25 @@ const review = ref({
     book_id: route.params.id,
 });
 
+const reviewToEdit = ref({});
+
 const handleCreateSubmit = async (data) => {
     await createReview(data);
-    // fetchBooks();
 };
+
+const handleUpdateSubmit = async (data) => {
+    await updateReview(data['id'], data);
+    edit.value = '';
+}
 
 const handleDeleteClick = async (id) => {
     await deleteReview(id);
-    // fetchBooks();
 }
 
+const handleEditClick = (reviewId, elementId) => {
+    edit.value = elementId;
+    reviewToEdit.value = getReviewById(reviewId).value;
+}
 
 </script>
 
@@ -54,13 +69,16 @@ const handleDeleteClick = async (id) => {
             <ReviewForm :review="review" @submit="handleCreateSubmit" />
         </div>
 
-        <div v-for="review in reviews" :key="review.id" class="book-review">
-            <h3>Review: {{ review.title }}</h3>
-            <p>
-                {{ review.body }}
-                <span class="float-right">Aanpassen | <button @click="handleDeleteClick(review.id)" class="link">Verwijder</button></span>
-            </p>
-                        
+        <div v-for="(review, index) in reviews" :key="review.id" :id="'Review' + index" class="book-review">
+            <div v-if="edit === 'Review' + index">
+                <ReviewForm :review="reviewToEdit" @submit="handleUpdateSubmit" />
+            </div>
+            <div v-else>
+                <h3>Review: {{ review.title }}</h3>
+                <p>{{ review.body }}</p>
+                <span class="float-right"><button @click="handleEditClick(review.id, 'Review' + index)" class="link"> Aanpassen </button> | 
+                    <button @click="handleDeleteClick(review.id)" class="link">Verwijder</button></span>
+            </div>
         </div>
     </div>
 </template>
