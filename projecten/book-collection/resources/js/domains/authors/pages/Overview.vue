@@ -11,14 +11,18 @@ fetchAuthors();
 
 <template>
     <ErrorMessage />
-        <table>
-        <tr>
-            <th>Name</th>
-        </tr>
-        <tr v-for="author in getAllAuthors" :key="author.id">
-            <td>{{ author.name }}</td>
-            <td><RouterLink :to="{ name: 'authors.edit', params: { id: author.id } }">Bewerk</RouterLink></td>
-            <td><button @click="deleteAuthor(author.id)">Verwijder</button></td>
-        </tr>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr v-for="author in getAllAuthors" :key="author.id">
+                <td>{{ author.name }}</td>
+                <td><RouterLink :to="{ name: 'authors.edit', params: { id: author.id } }">Bewerk</RouterLink></td>
+                <td><button @click="deleteAuthor(author.id)">Verwijder</button></td>
+            </tr>
+        </tbody>
     </table>
 </template>
