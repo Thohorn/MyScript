@@ -21,7 +21,6 @@
         let request = await getRequest('/me');
         me.value = request.data
     }
-
 </script>
 
 <template>

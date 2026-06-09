@@ -28,15 +28,13 @@ class AuthController extends Controller
     }
 
     public function me() {
-        if(Auth::hasUser()){
-            $user = Auth::user();
+        $user = Auth::user();
 
-            $me = [
-                'name' => $user['name'],
-                'email' => $user['email'],
-            ];
+        $me = [
+            'name' => $user['name'],
+            'email' => $user['email'],
+        ];
 
-            return $me;
-        };
+        return $me;
     }
 }
