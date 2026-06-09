@@ -1,15 +1,25 @@
 <script setup lang="ts">
     import { ref } from 'vue';
-    import { postRequest } from './services/http';
+    import { authenticateLoginRequest, getRequest } from './services/http';
 
     const user = ref({
         name: "",
         password: "",
     });
 
+    const me = ref({
+        name: "",
+        email: "",
+    });
 
-    const handleSubmit = () => {
-        alert("Logging in?");
+    const handleSubmit = async() => {
+        await authenticateLoginRequest(user.value);
+    }
+
+    const handleMe = async() =>
+    {
+        let request = await getRequest('/me');
+        me.value = request.data
     }
 
 </script>
@@ -25,4 +35,13 @@
 
         <button type="submit">Inloggen</button>
     </form>
+
+    <div class="gap-6 mt-4">
+        <button @click="handleMe">Wie ben ik?</button>
+        <p>
+            Naam: {{ me.name }} <br>
+            Email: {{ me.email }}
+        </p>
+    </div>
+
 </template>
