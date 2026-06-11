@@ -1,5 +1,4 @@
 <script setup>
-import { ref, onMounted, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import Form from '../components/Form.vue';
 import { fetchAuthors, getAuthorById, updateAuthor } from '../store';

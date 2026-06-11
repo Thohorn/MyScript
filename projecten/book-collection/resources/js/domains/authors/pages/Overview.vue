@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { onMounted } from 'vue';
 import { deleteAuthor, fetchAuthors, getAllAuthors } from '../store';
 import ErrorMessage from '../../../components/errorMessage.vue';

@@ -14,11 +14,13 @@
 
     const handleSubmit = async() => {
         await authenticateLoginRequest(user.value);
+        user.value.password = "";
     }
 
     const handleMe = async() =>
     {
         let request = await getRequest('/me');
+        console.log(request.data);
         me.value = request.data
     }
 </script>
