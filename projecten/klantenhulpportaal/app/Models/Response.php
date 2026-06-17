@@ -7,5 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Response extends Model
 {
+    /** @use HasFactory<\Database\Factories\ResponseFactory> */
     use HasFactory;
 }

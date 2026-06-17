@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Category;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -18,8 +19,8 @@ return new class extends Migration
             $table->string('body');
             $table->foreignIdFor(User::class)->nullable(false);
             $table->string('status');
-            $table->integer('category_id');
-            $table->foreignId('assigned_to')->references('id')->on('users');
+            $table->foreignIdFor(Category::class);
+            $table->foreignId('assigned_to')->constrained('users');
             $table->timestamps();
         });
     }

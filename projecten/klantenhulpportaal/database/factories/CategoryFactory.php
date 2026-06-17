@@ -2,14 +2,13 @@
 
 namespace Database\Factories;
 
-use App\Models\Model;
-use App\Models\User;
+use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends Factory<Model>
+ * @extends Factory<Category>
  */
-class TicketsFactory extends Factory
+class CategoryFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -20,8 +19,6 @@ class TicketsFactory extends Factory
     {
         return [
             'title' => fake()->word(),
-            'body' => fake()->paragraph(),
-            'user_id' => User::inRandomOrder()->first()->id,
         ];
     }
 }
