@@ -7,6 +7,8 @@ const router = useRouter();
 
 onBeforeMount(async() => {
     try{
+        // TODO:
+        // Save to store
         const user = await getRequest('/me');
     }catch{
         router.push({ name: 'user.login' });

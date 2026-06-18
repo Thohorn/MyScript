@@ -14,6 +14,8 @@
 
     const handleSubmit = async() => {
         await authenticateLoginRequest(user.value);
+        // TODO:
+        // Save user to store
         router.push({name: 'tickets.overview' });
     }
 

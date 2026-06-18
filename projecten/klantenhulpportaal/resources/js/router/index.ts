@@ -7,16 +7,3 @@ export const router = createRouter({
     history: createWebHistory(),
     routes: [...userRoutes, ...ticketRoutes],
 });
-
-// router.beforeEach(async (to, from) => {
-//     if (to.meta.auth) {
-//         try{
-//             const user = await getRequest('/me');
-//         }catch{        
-//             return {
-//             path: '/user',
-//             query: { redirect: to.fullPath },
-//             }
-//         }
-//     }
-// })
