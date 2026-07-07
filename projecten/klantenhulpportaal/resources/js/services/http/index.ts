@@ -13,8 +13,8 @@ const http = axios.create({
 
 http.interceptors.request.use(
     config => {
-        destroyErrors(); // Wis oude fouten voordat een nieuw verzoek wordt uitgevoerd
-        destroyMessage(); // Wis oude "messages" voordat een nieuw verzoek wordt uitgevoerd
+        destroyErrors(); 
+        destroyMessage();
         return config;
     },
     error => Promise.reject(error)
@@ -24,8 +24,8 @@ http.interceptors.response.use(
     response => response,
     error => {
         if (error.response && error.response.status === 422) {
-            setErrorBag(error.response.data.errors); // Sla validatiefouten op in de error bag
-            setMessage(error.response.data.message); // Sla de algemene foutmelding op
+            setErrorBag(error.response.data.errors);
+            setMessage(error.response.data.message);
         }
         return Promise.reject(error);
     }
@@ -38,5 +38,5 @@ export const putRequest = (endpoint: string, data: unknown) => http.put(endpoint
 export const deleteRequest = (endpoint: string) => http.delete(endpoint);
 
 export const authenticateLoginRequest = (data: unknown) => axios.get('/sanctum/csrf-cookie').then(Response =>{
-        postRequest('/login', data)
+        axios.post('/login', data);
     });
