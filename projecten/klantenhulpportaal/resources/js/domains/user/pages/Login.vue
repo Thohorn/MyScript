@@ -1,9 +1,10 @@
 <script setup lang="ts">
     import { ref } from 'vue';
-    import { authenticateLoginRequest } from '../../../services/http';
+    import { authenticateLoginRequest, getRequest } from '../../../services/http';
     import FormError from '../../../components/FormError.vue';
     import ErrorMessage from '../../../components/errorMessage.vue';
     import { useRouter } from 'vue-router';
+    import { currentUser } from '../store';
 
     const router = useRouter();
 
@@ -14,8 +15,10 @@
 
     const handleSubmit = async() => {
         await authenticateLoginRequest(user.value);
-        // TODO:
-        // Save user to store
+
+        const checkUser = await getRequest('/me');
+        // currentUser.value = checkUser.data;
+
         router.push({name: 'tickets.overview' });
     }
 

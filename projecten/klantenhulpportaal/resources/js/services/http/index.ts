@@ -38,5 +38,6 @@ export const putRequest = (endpoint: string, data: unknown) => http.put(endpoint
 export const deleteRequest = (endpoint: string) => http.delete(endpoint);
 
 export const authenticateLoginRequest = (data: unknown) => axios.get('/sanctum/csrf-cookie').then(Response =>{
-        axios.post('/login', data);
+        // axios.post('/login', data);
+        postRequest('/login', data);
     });

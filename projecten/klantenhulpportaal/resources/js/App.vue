@@ -2,24 +2,18 @@
 import { useRouter } from 'vue-router';
 import { getRequest } from './services/http';
 import { onBeforeMount} from 'vue';
-import { userStore } from './domains/user/store';
+import { currentUser } from './domains/user/store';
 
 const router = useRouter();
 
 onBeforeMount(async() => {
     try{
-        // TODO:
-        // Save to store
-        // userStore.actions.getAll;
-        const currentUser = await getRequest('/me');
-        console.log(currentUser);
-        // await getRequest('/me');
+        const checkUser = await getRequest('/me');
+        // currentUser.value = checkUser.data;
     }catch{
         router.push({ name: 'user.login' });
     }
 });
-
-
 
 </script>
 
