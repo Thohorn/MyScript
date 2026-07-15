@@ -4,8 +4,8 @@ namespace Database\Factories;
 
 use App\Models\Category;
 use App\Models\Ticket;
-use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Foundation\Auth\User;
 
 /**
  * @extends Factory<Ticket>
@@ -20,11 +20,11 @@ class TicketFactory extends Factory
     public function definition(): array
     {
         $status = [
-            'Open',
-            'In behandeling',
-            'Opgelost',
+                'Open',
+                'In behandeling',
+                'Opgelost',
         ];
-
+        
         return [
             'title' => fake()->word(),
             'body' => fake()->paragraph(),

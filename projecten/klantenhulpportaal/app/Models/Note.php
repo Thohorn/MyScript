@@ -10,7 +10,7 @@ class Note extends Model
 {
     /** @use HasFactory<\Database\Factories\NoteFactory> */
     use HasFactory;
-    
+
     protected $fillable = ['body', 'ticket_id', 'user_id'];
 
     public function ticket(): BelongsTo
@@ -22,4 +22,6 @@ class Note extends Model
     {
         return $this->belongsTo(User::class);
     }
+
 }
+

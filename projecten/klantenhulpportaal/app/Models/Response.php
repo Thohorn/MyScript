@@ -10,7 +10,7 @@ class Response extends Model
 {
     /** @use HasFactory<\Database\Factories\ResponseFactory> */
     use HasFactory;
-    
+
     protected $fillable = ['body', 'ticket_id', 'user_id'];
 
     public function ticket(): BelongsTo

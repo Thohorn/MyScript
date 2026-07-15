@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Str;
 
 class UserSeeder extends Seeder
 {
@@ -24,7 +23,6 @@ class UserSeeder extends Seeder
             'phone_number' => fake()->phoneNumber(),
             'password' => 'testUser',
             'role' => 'user',
-            'remember_token' => Str::random(10),
         ]);
 
         User::factory()->create([
@@ -35,7 +33,6 @@ class UserSeeder extends Seeder
             'phone_number' => fake()->phoneNumber(),
             'password' => 'testAdmin',
             'role' => 'admin',
-            'remember_token' => Str::random(10),
         ]);
     }
 }

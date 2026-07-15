@@ -5,6 +5,7 @@ import { setErrorBag, setMessage, destroyMessage } from '../error';
 
 const http = axios.create({
     baseURL: '/api',
+    // withCredentials:true,
     headers: {
         'Content-Type': 'application/json'
     }
@@ -37,7 +38,7 @@ export const postRequest = (endpoint: string, data: unknown) => http.post(endpoi
 export const putRequest = (endpoint: string, data: unknown) => http.put(endpoint, data);
 export const deleteRequest = (endpoint: string) => http.delete(endpoint);
 
-export const authenticateLoginRequest = (data: unknown) => axios.get('/sanctum/csrf-cookie').then(Response =>{
-        // axios.post('/login', data);
-        postRequest('/login', data);
-    });
+export const authenticateLoginRequest = async (data: unknown) =>{ 
+    await axios.get('/sanctum/csrf-cookie');
+    await postRequest('/login', data);
+}
