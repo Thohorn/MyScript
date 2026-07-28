@@ -1,7 +1,11 @@
 <script setup lang="ts">
+    import { useRouter } from 'vue-router';
     import { ref } from 'vue';
-import { authenticateLoginRequest, getRequest } from '../../../services/http';
+    import { authenticateLoginRequest, getRequest } from '../../../services/http';
+    import ErrorMessage from '../../../components/errorMessage.vue';
+    import FormError from '../../../components/FormError.vue';
 
+    const router = useRouter();
 
     const user = ref({
         email: "",
@@ -11,16 +15,18 @@ import { authenticateLoginRequest, getRequest } from '../../../services/http';
     const handleSubmit = async() => {
         await authenticateLoginRequest(user.value);
         const checkUser = await getRequest('/me');
-        console.log(checkUser);
+        router.push({name: 'tickets.overview'});
     }
 </script>
 
 
 <template>
     <h1>Login</h1>
+    <ErrorMessage />
     <form @submit.prevent="handleSubmit">
         <label for="email" class="mr-4">email:</label>
-        <input id="email" name="email" v-model="user.email" required>
+        <input id="email" name="email" v-model="user.email" type="email" required>
+        <FormError name="title" />
 
         <label for="password" class="mr-4">Wachtwoord:</label>
         <input id="password" name="password" type="password" v-model="user.password" required>
