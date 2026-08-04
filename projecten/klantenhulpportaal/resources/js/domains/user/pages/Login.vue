@@ -18,7 +18,12 @@
         const checkUser = await getRequest('/me');
         currentUser.value = {loggedIn: true, ...checkUser.data};
         router.push({name: 'tickets.overview'});
-    }
+    };
+
+    const handleForgotPassword = () => {
+        console.log("Forgetting password");
+        router.push({ name: 'user.forgotpassword' });
+    };
 </script>
 
 
@@ -34,5 +39,7 @@
         <input id="password" name="password" type="password" v-model="user.password" required>
 
         <button type="submit">Inloggen</button>
+        <button id="forgot-password" @click="handleForgotPassword">Wachtwoord vergeten</button>
     </form>
+        
 </template>

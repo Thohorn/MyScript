@@ -8,8 +8,10 @@ export const router = createRouter({
     routes: [...userRoutes, ...ticketsRoutes],
 });
 
+const openRoutes = ['user.login', 'user.forgotpassword'];
+
 router.beforeEach(async (to: RouteLocationNormalized, from: RouteLocationNormalized) => {
-    if(!currentUser.value.loggedIn && to.name !== 'user.login'){
+    if(!currentUser.value.loggedIn &&  !openRoutes.includes(to.name)  ){
         return {name: 'user.login'};
     }
     return true;

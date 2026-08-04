@@ -16,4 +16,11 @@ button {
     color: red;
 }
 
+#forgot-password {
+    margin-left: 10px;
+    opacity: 50%;
+}
 
+#forgot-password:hover {
+    opacity: 100%;
+}
