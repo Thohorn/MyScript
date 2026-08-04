@@ -8,6 +8,12 @@
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
 
+button {
+    cursor: pointer;
+}
+
 .error-message{
     color: red;
 }
+
+

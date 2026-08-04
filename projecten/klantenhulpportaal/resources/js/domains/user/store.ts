@@ -17,16 +17,18 @@ interface CurrentUser extends User {
     loggedIn: boolean;
 }
 
+export const emptyCurrentUser: CurrentUser = {
+    loggedIn: false,
+    id: -1,
+    name: '',
+    surname: '',
+    email: '',
+    email_verified_at: '',
+    phone_number: '',
+    role: '',
+    created_at: '',
+    updated_at: '',
+}
+
 export const userStore = storeModuleFactory<User>('user');
-export const currentUser = ref<CurrentUser>({   
-                                                loggedIn: false,
-                                                id: -1,
-                                                name: '',
-                                                surname: '',
-                                                email: '',
-                                                email_verified_at: '',
-                                                phone_number: '',
-                                                role: '',
-                                                created_at: '',
-                                                updated_at: '',
-                                            });
+export const currentUser = ref<CurrentUser>(emptyCurrentUser);

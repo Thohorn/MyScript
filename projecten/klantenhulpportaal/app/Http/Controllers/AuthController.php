@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+
 class AuthController extends Controller
 {
-    public function authenticate(Request $request)
+    public function authenticate(Request $request): JsonResponse
     {
         $credentials = $request->validate([
             'email' => ['required'],
@@ -26,8 +29,14 @@ class AuthController extends Controller
             ], 422));;
     }
 
-    public function me(Request $request) {
-        // dd($request->user());
+    public function logout(Request $request): void{
+        Auth::logout();
+        
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+    }
+
+    public function me(Request $request): User {
         $user = Auth::user();
 
         return $user;
