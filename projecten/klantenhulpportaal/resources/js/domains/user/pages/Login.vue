@@ -21,7 +21,6 @@
     };
 
     const handleForgotPassword = () => {
-        console.log("Forgetting password");
         router.push({ name: 'user.forgotpassword' });
     };
 </script>

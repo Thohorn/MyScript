@@ -10,4 +10,7 @@ Route::get('/user', function (Request $request) {
 
 Route::post('/login', [AuthController::class, 'authenticate']);
 Route::post('/logout', [AuthController::class, 'logout']);
+Route::post('/forgotpassword', [AuthController::class, 'forgotpassword']);
+Route::post('/resetpassword', [AuthController::class, 'resetpassword']);
+
 Route::get('/me', [AuthController::class, 'me'])->middleware('auth:sanctum');
