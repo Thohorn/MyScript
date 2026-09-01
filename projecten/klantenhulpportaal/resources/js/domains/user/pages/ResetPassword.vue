@@ -1,13 +1,12 @@
 <script setup lang="ts">
     import { ref } from 'vue';
-    import { useRoute, useRouter } from 'vue-router';
+    import { useRoute } from 'vue-router';
 import { postRequest } from '../../../services/http';
 import FormError from '../../../components/FormError.vue';
 import SuccesModal from '../../../components/SuccesModal.vue';
 import ErrorMessage from '../../../components/errorMessage.vue';
 
     const route = useRoute();
-    const router = useRouter();
 
     const resetPassword = ref({
         email: route.params.email,
