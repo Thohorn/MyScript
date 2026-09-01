@@ -30,7 +30,7 @@ class AuthController extends Controller
 
         throw new HttpResponseException(response()->json([
                 'message' => 'De gegevens komen niet overeen met wat bij ons bekend is.'
-            ], 422));;
+            ], 422));
     }
 
     public function logout(Request $request): void {
@@ -49,22 +49,28 @@ class AuthController extends Controller
     public function resetpassword(Request $request): void {
         $request->validate([
             'token' => 'required',
-            'emai' => ['required', 'email'],
+            'email' => ['required', 'email'],
             'password' => ['required', 'confirmed'],
         ]);
 
-        Password::reset(
-        $request->only('email', 'password', 'password_confirmation', 'token'),
-        function (User $user, string $password) {
-            $user->forceFill([
-                'password' => Hash::make($password)
-            ])->setRememberToken(Str::random(60));
- 
-            $user->save();
- 
-            event(new PasswordReset($user));
-        }
+        $status = Password::reset(
+            $request->only('email', 'password', 'password_confirmation', 'token'),
+            function (User $user, string $password) {
+                $user->forceFill([
+                    'password' => Hash::make($password)
+                ])->setRememberToken(Str::random(10));
+    
+                $user->save();
+    
+                event(new PasswordReset($user));
+            }
         );
+
+        if (!($status === Password::PasswordReset)){
+            throw new HttpResponseException(response()->json([
+                'message' => 'De token is verlopen. Vraag een nieuwe aan.'
+            ], 422));
+        }
     }
 
     public function me(Request $request): User {

@@ -17,6 +17,7 @@ import ErrorMessage from '../../../components/errorMessage.vue';
             await postRequest('/forgotpassword', email.value);
             alert('Als het mail adres overeenkomt met een account wordt er een mail gestuurd. Dit kan een paar minuten duren.');
         } catch(error){
+            console.log(error);
             userNotFound.value = 'Dit email adres is niet gevonden. Misschien is er een typfout.'
         }
         
