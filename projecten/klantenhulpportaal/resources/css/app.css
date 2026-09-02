@@ -12,8 +12,17 @@ button {
     cursor: pointer;
 }
 
-.error-message{
+.error-message {
     color: red;
+}
+
+table, th, td {
+    border: 1px solid;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
 }
 
 #forgot-password {

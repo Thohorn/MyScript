@@ -7,9 +7,10 @@ import SuccesModal from '../../../components/SuccesModal.vue';
 import ErrorMessage from '../../../components/errorMessage.vue';
 
     const route = useRoute();
+    console.log(route.query);
 
     const resetPassword = ref({
-        email: route.params.email,
+        email: route.query.email,
         password: "",
         password_confirmation: "",
         token: route.params.token,

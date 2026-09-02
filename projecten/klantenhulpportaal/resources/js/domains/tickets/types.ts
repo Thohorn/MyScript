@@ -2,10 +2,10 @@
 export type Ticket = {
   id: number;
   title: string;
-  category: Array<number>;
+  category: number;
   status: string;
-  created_by: string;
-  created_on: string;
-  updated_on: string;
+  created_by: number;
+  created_at: Date;
+  updated_at: Date;
   assigned_to: number;
 };
