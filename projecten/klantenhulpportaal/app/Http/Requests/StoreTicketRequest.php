@@ -25,6 +25,7 @@ class StoreTicketRequest extends FormRequest
         return [
             'title' => 'required|string|max:255',
             'body' => 'required|string',
+            'category_id' => 'required|integer',
             'user_id' => 'required|exists:users,id',
         ];
     }

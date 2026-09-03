@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { categoriesStore } from '../../categories/store';
-import { currentUser, userStore } from '../../user/store';
+import { userStore } from '../../user/store';
 import { TicketStore } from '../store';
 
 TicketStore.actions.getAll();
@@ -26,15 +26,15 @@ const tickets = TicketStore.getters.all;
         </tr>
     </thead>
     <tbody>
-        <tr v-for="ticket in tickets" :key="ticket.id">
+        <tr v-if="tickets" v-for="ticket in tickets" :key="ticket.id">
             <td>{{ ticket.id }}</td>
             <td>{{ ticket.title }}</td>
-            <td>{{ categoriesStore.getters.byId(ticket.category).value.title }}</td>
+            <td>{{ categoriesStore.getters.byId(ticket.category_id).value?.title }}</td>
             <td>{{ ticket.status }}</td>
-            <td>{{ userStore.getters.byId(ticket.created_by).value.name }} {{ userStore.getters.byId(ticket.created_by).value.surname }}</td>
+            <td>{{ userStore.getters.byId(ticket.user_id).value?.name }} {{ userStore.getters.byId(ticket.user_id).value?.surname }}</td>
             <td>{{ new Date(ticket.created_at).toLocaleDateString(undefined, {day:'numeric', month:'long', year:'numeric'}) }}</td>
             <td>{{ new Date(ticket.updated_at).toLocaleDateString(undefined, {day:'numeric', month:'long', year:'numeric'}) }}</td>
-            <td>{{ userStore.getters.byId(ticket.assigned_to).value.name }} {{ userStore.getters.byId(ticket.assigned_to).value.surname }}</td>
+            <td>{{ userStore.getters.byId(ticket.assigned_to).value?.name }} {{ userStore.getters.byId(ticket.assigned_to).value?.surname }}</td>
         </tr>
     </tbody>
 </table>

@@ -20,6 +20,7 @@ Route::get('/me', [AuthController::class, 'me'])->middleware('auth:sanctum');
 
 Route::controller(TicketController::class)->group(function () {
     Route::get('/tickets', 'index');
+    Route::post('/tickets', 'store');
 });
 
 Route::controller(UserController::class)->group(function () {
