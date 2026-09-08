@@ -18,13 +18,16 @@ class TicketController extends Controller
             return TicketResource::collection(Ticket::orderBy('created_at', 'DESC')->get());
         }
         else{
+            // $tickets = TicketResource::collection(Ticket::where('user_id', $user->id)->orderBy('created_at', 'DESC')->get());
+            // dd($tickets);
             return TicketResource::collection(Ticket::where('user_id', $user->id)->orderBy('created_at', 'DESC')->get());
         }
     }
 
-    public function store(StoreTicketRequest $request) {
+    public function store(StoreTicketRequest $request): ResourceCollection {
         $ticket = $request->validated();
         Ticket::create($ticket);
-        dd(Ticket::all());
+        
+        return TicketResource::collection(Ticket::orderBy('created_at', 'DESC')->get());
     }
 }

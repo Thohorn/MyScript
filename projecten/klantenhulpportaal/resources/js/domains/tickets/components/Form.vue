@@ -24,7 +24,7 @@
         <FormError name="title" />
 
         <label>Categorie:</label>
-        <select v-if="categories" v-model="form.category" required>
+        <select v-if="categories" v-model="form.category_id" required>
             <option v-for="category in categories" :key="category.id" :value="category.id">
                 {{ category.title }}
             </option>

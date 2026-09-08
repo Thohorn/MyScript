@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreignIdFor(User::class)->nullable(false);
             $table->string('status')->default('open');
             $table->foreignIdFor(Category::class);
-            $table->foreignId('assigned_to')->constrained('users');
+            $table->foreignId('assigned_to')->nullable()->constrained('users');
             $table->timestamps();
         });
     }

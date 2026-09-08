@@ -32,9 +32,10 @@ const tickets = TicketStore.getters.all;
             <td>{{ categoriesStore.getters.byId(ticket.category_id).value?.title }}</td>
             <td>{{ ticket.status }}</td>
             <td>{{ userStore.getters.byId(ticket.user_id).value?.name }} {{ userStore.getters.byId(ticket.user_id).value?.surname }}</td>
-            <td>{{ new Date(ticket.created_at).toLocaleDateString(undefined, {day:'numeric', month:'long', year:'numeric'}) }}</td>
-            <td>{{ new Date(ticket.updated_at).toLocaleDateString(undefined, {day:'numeric', month:'long', year:'numeric'}) }}</td>
-            <td>{{ userStore.getters.byId(ticket.assigned_to).value?.name }} {{ userStore.getters.byId(ticket.assigned_to).value?.surname }}</td>
+            <td v-if="ticket.created_at">{{ new Date(ticket.created_at).toLocaleDateString(undefined, {day:'numeric', month:'long', year:'numeric'}) }}</td>
+            <td v-if="ticket.updated_at">{{ new Date(ticket.updated_at).toLocaleDateString(undefined, {day:'numeric', month:'long', year:'numeric'}) }}</td>
+            <td v-if="ticket.assigned_to">{{ userStore.getters.byId(ticket.assigned_to).value?.name }} {{ userStore.getters.byId(ticket.assigned_to).value?.surname }}</td>
+            <td v-else>Nog niet toegewezen</td>
         </tr>
     </tbody>
 </table>
