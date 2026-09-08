@@ -35,6 +35,6 @@
         <textarea v-model="form.body" required />
         <FormError name="body" />
 
-        <button type="submit">Ticket inleveren</button>
+        <button type="submit">Ticket opslaan</button>
     </form>
 </template>

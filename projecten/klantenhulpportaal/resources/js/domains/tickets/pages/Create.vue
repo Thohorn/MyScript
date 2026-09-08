@@ -16,7 +16,7 @@ const ticket: Ticket = {
 
 const handleSubmit = async (data: Ticket) => {
     TicketStore.actions.create(data);
-    // router.push({name: 'tickets.overview'});
+    router.push({name: 'tickets.overview'});
 }
 
 </script>

@@ -28,7 +28,7 @@ const tickets = TicketStore.getters.all;
     <tbody>
         <tr v-if="tickets" v-for="ticket in tickets" :key="ticket.id">
             <td>{{ ticket.id }}</td>
-            <td>{{ ticket.title }}</td>
+            <td><router-link :to="{name: 'tickets.show', params: {id: ticket.id}}">{{ ticket.title }}</router-link></td>
             <td>{{ categoriesStore.getters.byId(ticket.category_id).value?.title }}</td>
             <td>{{ ticket.status }}</td>
             <td>{{ userStore.getters.byId(ticket.user_id).value?.name }} {{ userStore.getters.byId(ticket.user_id).value?.surname }}</td>
@@ -36,6 +36,7 @@ const tickets = TicketStore.getters.all;
             <td v-if="ticket.updated_at">{{ new Date(ticket.updated_at).toLocaleDateString(undefined, {day:'numeric', month:'long', year:'numeric'}) }}</td>
             <td v-if="ticket.assigned_to">{{ userStore.getters.byId(ticket.assigned_to).value?.name }} {{ userStore.getters.byId(ticket.assigned_to).value?.surname }}</td>
             <td v-else>Nog niet toegewezen</td>
+            <td v-if="ticket.id"><router-link :to="{name: 'tickets.edit', params: {id: ticket.id}}">Aanpassen</router-link></td>
         </tr>
     </tbody>
 </table>

@@ -18,8 +18,6 @@ class TicketController extends Controller
             return TicketResource::collection(Ticket::orderBy('created_at', 'DESC')->get());
         }
         else{
-            // $tickets = TicketResource::collection(Ticket::where('user_id', $user->id)->orderBy('created_at', 'DESC')->get());
-            // dd($tickets);
             return TicketResource::collection(Ticket::where('user_id', $user->id)->orderBy('created_at', 'DESC')->get());
         }
     }
@@ -29,5 +27,20 @@ class TicketController extends Controller
         Ticket::create($ticket);
         
         return TicketResource::collection(Ticket::orderBy('created_at', 'DESC')->get());
+    }
+
+    public function update(StoreTicketRequest $request, Ticket $ticket): Ticket {
+        $user = Auth::user();
+        $validated = $request->validated();
+        if ($user->role === "admin" || $user->id === $validated["user_id"]){
+            $ticket->update($validated);
+            return $ticket;
+        }
+        else {
+            throw new HttpResponseException(response()->json([
+                'message' => 'Je mag de ticket niet aanpassen.'
+            ], 422));
+        }
+        
     }
 }

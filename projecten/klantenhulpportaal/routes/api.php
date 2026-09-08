@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ResponseController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -21,6 +22,7 @@ Route::get('/me', [AuthController::class, 'me'])->middleware('auth:sanctum');
 Route::controller(TicketController::class)->group(function () {
     Route::get('/tickets', 'index');
     Route::post('/tickets', 'store');
+    Route::put('/tickets/{ticket}', 'update');
 });
 
 Route::controller(UserController::class)->group(function () {
@@ -29,4 +31,8 @@ Route::controller(UserController::class)->group(function () {
 
 Route::controller(CategoryController::class)->group(function () {
     Route::get('/categories', 'index');
+});
+
+Route::controller(ResponseController::class)->group(function (){
+    Route::get('/responses/{ticket}', 'index');
 });
