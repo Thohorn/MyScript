@@ -3,6 +3,7 @@ import { useRoute } from 'vue-router';
 import { TicketStore } from '../store';
 import { categoriesStore } from '../../categories/store';
 import { userStore } from '../../user/store';
+import { getAllResponsesByTicket, responseStore } from '../../responses/store';
 
 const route = useRoute();
 
@@ -12,10 +13,19 @@ userStore.actions.getAll();
 
 const ticket = TicketStore.getters.byId(Number(route.params.id));
 
+getAllResponsesByTicket(Number(route.params.id));
+const responses = responseStore.getters.all;
+
+
 </script>
 
 <template>
-    <div v-if="ticket">
+    <div class="text-xl font-bold">Ticket: </div>
+    <div v-if="ticket" class="border-1 mt-2">
+        <div class="mb-1">
+            <div class="text-2xl font-extrabold">Status:</div>
+            {{ ticket.status }}
+        </div>
         <div class="mb-1">
             <div class="text-xl font-bold">Title:</div>
             {{ ticket.title }}
@@ -29,10 +39,6 @@ const ticket = TicketStore.getters.byId(Number(route.params.id));
             {{ ticket.body }}
         </div>
         <div class="mb-1">
-            <div class="text-xl font-bold">Status:</div>
-            {{ ticket.status }}
-        </div>
-        <div class="mb-1">
             <div class="text-xl font-bold">Gemaakt door:</div>
             {{ userStore.getters.byId(ticket.user_id).value?.name }} {{ userStore.getters.byId(ticket.user_id).value?.surname }}
         </div>
@@ -44,13 +50,30 @@ const ticket = TicketStore.getters.byId(Number(route.params.id));
             <div class="text-xl font-bold">Geupdate op:</div>
             {{ ticket.updated_at }}
         </div>
-        <div v-if="ticket.assigned_to" class="mb-1">
+        <div class="mb-1">
             <div class="text-xl font-bold">Toegewezen aan:</div>
-            {{ userStore.getters.byId(ticket.assigned_to).value?.name }} {{ userStore.getters.byId(ticket.assigned_to).value?.surname }}
+            <div v-if="ticket.assigned_to">
+                {{ userStore.getters.byId(ticket.assigned_to).value?.name }} {{ userStore.getters.byId(ticket.assigned_to).value?.surname }}
+            </div>
+            <div v-else>
+                Nog niet toegewezen.
+            </div>
         </div>
     </div>
     <!-- Responses -->
     <div>
-        
+        <div class="mt-5 text-xl font-bold">Reacties:</div>
+        <div v-if="responses.length > 0" v-for="response in responses" class="mb-6 mt-2 border-1">
+            <div>{{ response.body }}</div>
+            <div>{{ userStore.getters.byId(response.user_id).value?.name }} {{ userStore.getters.byId(response.user_id).value?.surname }}
+                <span v-if="response.created_at && response.created_at === response.updated_at" class="float-right">
+                    {{ new Date(response.created_at).toLocaleDateString(undefined, {day:'numeric', month:'long', year:'numeric'}) }}
+                </span>
+                <span v-else-if="response.updated_at">(Aangepast) {{ new Date(response.updated_at).toLocaleDateString(undefined, {day:'numeric', month:'long', year:'numeric'}) }}</span>
+            </div>
+        </div>
+        <div v-else>
+            Nog geen reacties.
+        </div>
     </div>
 </template>

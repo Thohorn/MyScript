@@ -22,7 +22,7 @@ class ResponseFactory extends Factory
         return [
             'body' => fake()->paragraph(),
             'ticket_id' => Ticket::inRandomOrder()->first()->id,
-            'user_id' => User::inRandomOrder()->first()->id,
+            'user_id' => User::where('role', 'admin')->inRandomOrder()->first()->id,
         ];
     }
 }

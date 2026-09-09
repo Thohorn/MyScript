@@ -10,7 +10,7 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class ResponseController extends Controller
 {
-    public function index(Ticket $ticket):ResourceCollection {
-        return ResponseResource::collection((Response::where('ticket_id', $ticket->id)->get()));
+    public function index(Request $request):ResourceCollection {
+        return ResponseResource::collection((Response::where('ticket_id', $request->route()->ticket)->get()));
     }
 }
