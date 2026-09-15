@@ -3,7 +3,6 @@ import { useRouter, useRoute } from 'vue-router';
 import Form from '../components/Form.vue';
 import { TicketStore } from '../store.js';
 import { Ticket } from '../types.js';
-import { getErrorBag } from '../../../services/error/index.js';
 
 const route = useRoute();
 const router = useRouter(); 
@@ -14,12 +13,11 @@ const ticket = TicketStore.getters.byId(Number(route.params.id));
 
 const handleSubmit = async (data: Ticket) => {
     await TicketStore.actions.update(Number(route.params.id), data);
-    // console.log('errorBag: ' + getErrorBag.value);
     router.push({name: 'tickets.overview'});
 }
 
 </script>
 
 <template>
-<Form :ticket="ticket"  @submit="handleSubmit"/>
+<Form v-if="ticket" :ticket="ticket"  @submit="handleSubmit"/>
 </template>

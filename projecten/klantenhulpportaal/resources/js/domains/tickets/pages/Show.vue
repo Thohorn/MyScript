@@ -2,8 +2,12 @@
 import { useRoute } from 'vue-router';
 import { TicketStore } from '../store';
 import { categoriesStore } from '../../categories/store';
-import { userStore } from '../../user/store';
+import { currentUser, userStore } from '../../user/store';
 import { getAllResponsesByTicket, responseStore } from '../../responses/store';
+import FormError from '../../../components/FormError.vue';
+import { ref } from 'vue';
+import AssignAdminForm from '../components/AssignAdminForm.vue';
+import { Ticket } from '../types';
 
 const route = useRoute();
 
@@ -16,6 +20,9 @@ const ticket = TicketStore.getters.byId(Number(route.params.id));
 getAllResponsesByTicket(Number(route.params.id));
 const responses = responseStore.getters.all;
 
+const handleSubmit = async (data: Ticket) => {
+    await TicketStore.actions.update(Number(route.params.id), data);
+};
 
 </script>
 
@@ -42,17 +49,20 @@ const responses = responseStore.getters.all;
             <div class="text-xl font-bold">Gemaakt door:</div>
             {{ userStore.getters.byId(ticket.user_id).value?.name }} {{ userStore.getters.byId(ticket.user_id).value?.surname }}
         </div>
-        <div class="mb-1">
+        <div v-if="ticket.created_at" class="mb-1">
             <div class="text-xl font-bold">Gemaakt op:</div>
-            {{ ticket.created_at }}
+            {{ new Date(ticket.created_at).toLocaleDateString(undefined, {day:'numeric', month:'long', year:'numeric'}) }}
         </div>
-        <div class="mb-1">
+        <div v-if="ticket.updated_at" class="mb-1">
             <div class="text-xl font-bold">Geupdate op:</div>
-            {{ ticket.updated_at }}
+            {{ new Date(ticket.updated_at).toLocaleDateString(undefined, {day:'numeric', month:'long', year:'numeric'}) }}
         </div>
         <div class="mb-1">
             <div class="text-xl font-bold">Toegewezen aan:</div>
-            <div v-if="ticket.assigned_to">
+            <div v-if="currentUser.role === 'admin'">
+                <AssignAdminForm :ticket="ticket"  @submit="handleSubmit" />
+            </div>
+            <div v-else-if="ticket.assigned_to">
                 {{ userStore.getters.byId(ticket.assigned_to).value?.name }} {{ userStore.getters.byId(ticket.assigned_to).value?.surname }}
             </div>
             <div v-else>

@@ -27,6 +27,7 @@ class StoreTicketRequest extends FormRequest
             'body' => 'required|string',
             'category_id' => 'required|integer',
             'user_id' => 'required|exists:users,id',
+            'assigned_to' => 'nullable|exists:users,id',
         ];
     }
 }

@@ -41,6 +41,5 @@ class TicketController extends Controller
                 'message' => 'Je mag de ticket niet aanpassen.'
             ], 422));
         }
-        
     }
 }
