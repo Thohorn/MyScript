@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreTicketRequest;
 use App\Http\Resources\TicketResource;
 use App\Models\Ticket;
+use App\Models\User;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Facades\Auth;
@@ -33,8 +34,16 @@ class TicketController extends Controller
         $user = Auth::user();
         $validated = $request->validated();
         if ($user->role === "admin" || $user->id === $validated["user_id"]){
-            $ticket->update($validated);
-            return $ticket;
+            if($validated["assigned_to"] && User::where('id', $validated["assigned_to"])->first()["role"] === 'admin'){
+                $ticket->update($validated);
+                return $ticket;
+            }
+            else {
+                throw new HttpResponseException(response()->json([
+                    'message' => 'De ticket wordt toegewezen aan een gebruiker, dit mag niet.'
+                ], 422)); 
+            }
+            
         }
         else {
             throw new HttpResponseException(response()->json([

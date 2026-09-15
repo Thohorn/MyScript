@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreTicketRequest extends FormRequest
 {
@@ -28,6 +29,7 @@ class StoreTicketRequest extends FormRequest
             'category_id' => 'required|integer',
             'user_id' => 'required|exists:users,id',
             'assigned_to' => 'nullable|exists:users,id',
+            'status' => ['sometimes', Rule::in(['Open', 'In behandeling', 'Opgelost'])],
         ];
     }
 }
