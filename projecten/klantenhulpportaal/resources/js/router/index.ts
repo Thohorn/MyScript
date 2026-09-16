@@ -15,5 +15,8 @@ router.beforeEach(async (to: RouteLocationNormalized, from: RouteLocationNormali
     if(!currentUser.value.loggedIn &&  !openRoutes.includes(to.name)  ){
         return {name: 'user.login'};
     }
+    if(to.meta.requiresAdmin && currentUser.value.role !== 'admin'){
+        return {name: 'tickets.overview'};
+    }
     return true;
 });

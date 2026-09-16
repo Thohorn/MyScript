@@ -1,13 +1,5 @@
 <script setup lang="ts">
-    import { useRouter } from 'vue-router';
-    import { currentUser } from '../../user/store';
     import { categoriesStore } from '../store';
-
-    const router = useRouter();
-
-    if (currentUser.value.role !== 'admin'){
-        router.push({name: 'tickets.overview'});    
-    }
 
     categoriesStore.actions.getAll();
     const categories = categoriesStore.getters.all;    
@@ -16,6 +8,7 @@
 </script>
 
 <template>
+    <router-link :to="{name: 'categories.create'}">Maak een category</router-link>
     <table>
         <thead>
             <th>Titel</th>
@@ -23,6 +16,7 @@
         <tbody>
             <tr v-for="catgegory in categories" >
                 <td> {{ catgegory.title }}</td>
+                <td v-if="catgegory.id"><router-link :to="{name: 'categories.edit', params: {id: catgegory.id}}">Aanpassen</router-link></td>
             </tr>
         </tbody>
     </table>

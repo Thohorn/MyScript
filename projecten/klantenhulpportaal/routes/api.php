@@ -31,6 +31,8 @@ Route::controller(UserController::class)->group(function () {
 
 Route::controller(CategoryController::class)->group(function () {
     Route::get('/categories', 'index');
+    Route::post('/categories', 'store');
+    Route::put('/categories/{category}', 'update');
 });
 
 Route::controller(ResponseController::class)->group(function (){
