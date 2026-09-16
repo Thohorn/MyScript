@@ -8,6 +8,7 @@ import FormError from '../../../components/FormError.vue';
 import { ref } from 'vue';
 import AssignAdminForm from '../components/AssignAdminForm.vue';
 import { Ticket } from '../types';
+import StatusForm from '../components/StatusForm.vue';
 
 const route = useRoute();
 
@@ -31,7 +32,10 @@ const handleSubmit = async (data: Ticket) => {
     <div v-if="ticket" class="border-1 mt-2">
         <div class="mb-1">
             <div class="text-2xl font-extrabold">Status:</div>
-            {{ ticket.status }}
+            <span v-if="currentUser.role === 'admin'">
+                <StatusForm :ticket="ticket"  @submit="handleSubmit" />
+            </span>
+            <span v-else>{{ ticket.status }}</span>
         </div>
         <div class="mb-1">
             <div class="text-xl font-bold">Title:</div>
