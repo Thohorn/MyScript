@@ -4,11 +4,12 @@ import { TicketStore } from '../store';
 import { categoriesStore } from '../../categories/store';
 import { currentUser, userStore } from '../../user/store';
 import { getAllResponsesByTicket, responseStore } from '../../responses/store';
-import FormError from '../../../components/FormError.vue';
-import { ref } from 'vue';
 import AssignAdminForm from '../components/AssignAdminForm.vue';
 import { Ticket } from '../types';
 import StatusForm from '../components/StatusForm.vue';
+import ResponseForm from '../components/ResponseForm.vue';
+import { Response } from '../../responses/types';
+import { onBeforeUpdate, onMounted, Ref, ref } from 'vue';
 
 const route = useRoute();
 
@@ -21,9 +22,21 @@ const ticket = TicketStore.getters.byId(Number(route.params.id));
 getAllResponsesByTicket(Number(route.params.id));
 const responses = responseStore.getters.all;
 
-const handleSubmit = async (data: Ticket) => {
+const response: Ref<Response> = ref({
+    body: '',
+    ticket_id: Number(route.params.id),
+    user_id: 0,
+});
+
+onBeforeUpdate(() => response.value.user_id = ticket.value.user_id);
+
+const handleTicketSubmit = async (data: Ticket) => {
     await TicketStore.actions.update(Number(route.params.id), data);
 };
+
+const handleResponseSubmit = async(data: Response) => {
+    await responseStore.actions.create(data);
+}
 
 </script>
 
@@ -33,7 +46,7 @@ const handleSubmit = async (data: Ticket) => {
         <div class="mb-1">
             <div class="text-2xl font-extrabold">Status:</div>
             <span v-if="currentUser.role === 'admin'">
-                <StatusForm :ticket="ticket"  @submit="handleSubmit" />
+                <StatusForm :ticket="ticket"  @submit="handleTicketSubmit" />
             </span>
             <span v-else>{{ ticket.status }}</span>
         </div>
@@ -64,7 +77,7 @@ const handleSubmit = async (data: Ticket) => {
         <div class="mb-1">
             <div class="text-xl font-bold">Toegewezen aan:</div>
             <div v-if="currentUser.role === 'admin'">
-                <AssignAdminForm :ticket="ticket"  @submit="handleSubmit" />
+                <AssignAdminForm :ticket="ticket"  @submit="handleTicketSubmit" />
             </div>
             <div v-else-if="ticket.assigned_to">
                 {{ userStore.getters.byId(ticket.assigned_to).value?.name }} {{ userStore.getters.byId(ticket.assigned_to).value?.surname }}
@@ -89,5 +102,8 @@ const handleSubmit = async (data: Ticket) => {
         <div v-else>
             Nog geen reacties.
         </div>
+    </div>
+    <div v-if="currentUser.role === 'admin' && response.user_id !== 0">
+        <ResponseForm :response="response" @submit="handleResponseSubmit"/>
     </div>
 </template>

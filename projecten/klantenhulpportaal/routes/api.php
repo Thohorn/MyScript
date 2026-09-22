@@ -39,6 +39,7 @@ Route::controller(CategoryController::class)->middleware(['auth:sanctum', Ensure
     Route::delete('/categories/{category}', 'destroy');
 });
 
-Route::controller(ResponseController::class)->middleware('auth:sanctum')->group(function (){
-    Route::get('/responses/{ticket}', 'index');
+Route::controller(ResponseController::class)->middleware(['auth:sanctum', EnsureIsAdmin::class])->group(function (){
+    Route::get('/responses/{ticket}', 'index')->withoutMiddleware(EnsureIsAdmin::class);
+    Route::post('/responses', 'store');
 });
