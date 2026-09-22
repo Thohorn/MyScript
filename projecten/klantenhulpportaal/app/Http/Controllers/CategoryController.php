@@ -17,34 +17,27 @@ class CategoryController extends Controller
     }
 
     public function store(StoreCategoryRequest $request): ResourceCollection {
-        $user = Auth::user();
-
-        if($user->role === 'admin'){
-            $category = $request->validated();
-            Category::create($category);
-            
-            return CategoryResource::collection(Category::orderBy('title', 'ASC')->get());
-        }
-        else {
-            throw new HttpResponseException(response()->json([
-                'message' => 'Je mag geen categorie aanmaken.'
-            ], 422));
-        }
+        $category = $request->validated();
+        Category::create($category);
         
+        return CategoryResource::collection(Category::orderBy('title', 'ASC')->get());        
     }
 
     public function update(StoreCategoryRequest $request, Category $category): Category {
-        $user = Auth::user();
+        $category->update($request->validated());
+        return $category;
 
-        if($user->role === 'admin'){
-            $category->update($request->validated());
-            return $category;
-        }
-        else {
-            throw new HttpResponseException(response()->json([
-                'message' => 'Je mag de categorie niet aanpassen.'
-            ], 422));
-        }
     }
 
+    public function destroy(Category $category): ResourceCollection {
+        if($category->tickets()->exists()){
+            throw new HttpResponseException(response()->json([
+                'message' => 'Deze categorie kan niet worden verwijderd omdat er tickets aan gekoppeld zijn.'
+            ], 422));
+        };
+
+        $category->delete();
+
+        return CategoryResource::collection(Category::orderBy('title', 'ASC')->get());       
+    }
 }
