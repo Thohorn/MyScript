@@ -32,7 +32,9 @@ import ErrorMessage from '../../../components/errorMessage.vue';
     <router-link :to="{name: 'categories.create'}">Maak een category</router-link>
     <table>
         <thead>
-            <th>Titel</th>
+            <tr>
+                <th>Titel</th>
+            </tr>
         </thead>
         <tbody>
             <tr v-for="catgegory in categories" >

@@ -34,7 +34,7 @@ class TicketController extends Controller
         $user = Auth::user();
         $validated = $request->validated();
         if ($user->role === "admin" || $user->id === $validated["user_id"]){
-            if($validated["assigned_to"] && User::where('id', $validated["assigned_to"])->first()["role"] === 'admin'){
+            if($validated["assigned_to"] === null || User::where('id', $validated["assigned_to"])->first()["role"] === 'admin'){
                 $ticket->update($validated);
                 return $ticket;
             }

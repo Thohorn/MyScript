@@ -9,7 +9,7 @@ import { Ticket } from '../types';
 import StatusForm from '../components/StatusForm.vue';
 import ResponseForm from '../components/ResponseForm.vue';
 import { Response } from '../../responses/types';
-import { onBeforeUpdate, onMounted, Ref, ref } from 'vue';
+import { Ref, ref } from 'vue';
 
 const route = useRoute();
 
@@ -19,23 +19,30 @@ userStore.actions.getAll();
 
 const ticket = TicketStore.getters.byId(Number(route.params.id));
 
+const newResponse: Ref<Response> = ref({
+    body: '',
+    ticket_id: Number(route.params.id),
+    user_id: currentUser.value.id,
+});
+
 getAllResponsesByTicket(Number(route.params.id));
 const responses = responseStore.getters.all;
 
-const response: Ref<Response> = ref({
-    body: '',
-    ticket_id: Number(route.params.id),
-    user_id: 0,
-});
-
-onBeforeUpdate(() => response.value.user_id = ticket.value.user_id);
+const editResponse: Ref<Number> = ref(0);
 
 const handleTicketSubmit = async (data: Ticket) => {
     await TicketStore.actions.update(Number(route.params.id), data);
 };
 
-const handleResponseSubmit = async(data: Response) => {
+const handleResponseSubmit = async (data: Response) => {
     await responseStore.actions.create(data);
+    await getAllResponsesByTicket(Number(route.params.id));
+}
+
+const handleResponseUpdate = async (data: Response) => {
+    await responseStore.actions.update(Number(data.id), data);
+    await getAllResponsesByTicket(Number(route.params.id));
+    editResponse.value = 0;
 }
 
 </script>
@@ -90,20 +97,30 @@ const handleResponseSubmit = async(data: Response) => {
     <!-- Responses -->
     <div>
         <div class="mt-5 text-xl font-bold">Reacties:</div>
-        <div v-if="responses.length > 0" v-for="response in responses" class="mb-6 mt-2 border-1">
-            <div>{{ response.body }}</div>
-            <div>{{ userStore.getters.byId(response.user_id).value?.name }} {{ userStore.getters.byId(response.user_id).value?.surname }}
-                <span v-if="response.created_at && response.created_at === response.updated_at" class="float-right">
-                    {{ new Date(response.created_at).toLocaleDateString(undefined, {day:'numeric', month:'long', year:'numeric'}) }}
-                </span>
-                <span v-else-if="response.updated_at">(Aangepast) {{ new Date(response.updated_at).toLocaleDateString(undefined, {day:'numeric', month:'long', year:'numeric'}) }}</span>
+        <div v-if="responses.length > 0" v-for="response in responses">
+            <div v-if="response.ticket_id === Number(route.params.id)" class="mb-6 mt-2 border-1">
+                <div v-if="editResponse !== response.id">
+                    <div>
+                        <div>{{ response.body }}</div>
+                        <div>{{ userStore.getters.byId(response.user_id).value?.name }} {{ userStore.getters.byId(response.user_id).value?.surname }}
+                            <span v-if="response.created_at && response.created_at === response.updated_at" class="float-right">
+                                {{ new Date(response.created_at).toLocaleDateString(undefined, {day:'numeric', month:'long', year:'numeric'}) }}
+                            </span>
+                            <span v-else-if="response.updated_at" class="float-right">(Aangepast) {{ new Date(response.updated_at).toLocaleDateString(undefined, {day:'numeric', month:'long', year:'numeric'}) }}</span>
+                            <span v-if="response.id && currentUser.role === 'admin'" class="float-right mr-5"><button @click="editResponse = response.id">Aanpassen</button></span>
+                        </div>
+                    </div>
+                </div>
+                <div v-else>
+                    <ResponseForm :response="response" @submit="handleResponseUpdate" />
+                </div>
             </div>
         </div>
         <div v-else>
             Nog geen reacties.
         </div>
     </div>
-    <div v-if="currentUser.role === 'admin' && response.user_id !== 0">
-        <ResponseForm :response="response" @submit="handleResponseSubmit"/>
+    <div v-if="currentUser.role === 'admin' && newResponse.user_id !== 0">
+        <ResponseForm :response="newResponse" @submit="handleResponseSubmit"/>
     </div>
 </template>
