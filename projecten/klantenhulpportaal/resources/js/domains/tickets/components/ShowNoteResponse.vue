@@ -4,7 +4,7 @@
     import { Note } from '../../notes/types';
     import { Response } from '../../responses/types';
     import { useRoute } from 'vue-router';
-import NoteResponseForm from './NoteResponseForm.vue';
+    import NoteResponseForm from './NoteResponseForm.vue';
 
     userStore.actions.getAll();
 
@@ -13,7 +13,7 @@ import NoteResponseForm from './NoteResponseForm.vue';
     const props = defineProps({ prop: Object, what: String })
     const editItem: Ref<Number> = ref(0);
 
-    const emit = defineEmits(['submit']);
+    const emit = defineEmits(['submit', 'delete']);
     
     const item = ref({...props.prop});
 
@@ -29,6 +29,10 @@ import NoteResponseForm from './NoteResponseForm.vue';
         editItem.value = 0;
     }
 
+    const handleDelete = (data: Object) => {
+        emit('delete', data);
+    }
+
 </script>
 
 
@@ -42,7 +46,10 @@ import NoteResponseForm from './NoteResponseForm.vue';
                         {{ new Date(item.created_at).toLocaleDateString(undefined, {day:'numeric', month:'long', year:'numeric'}) }}
                     </span>
                     <span v-else-if="item.updated_at" class="float-right">(Aangepast) {{ new Date(item.updated_at).toLocaleDateString(undefined, {day:'numeric', month:'long', year:'numeric'}) }}</span>
-                    <span v-if="item.id && currentUser.role === 'admin'" class="float-right mr-5"><button @click="editItem = item.id">Aanpassen</button></span>
+                    <span v-if="item.id && currentUser.role === 'admin'" class="float-right mr-5">
+                        <button @click="editItem = item.id">Aanpassen</button>
+                        <button v-if="props.what === 'Note'" class="ml-2" @click="handleDelete(item)">Verwijderen</button>
+                    </span>
                 </div>
             </div>
         </div>

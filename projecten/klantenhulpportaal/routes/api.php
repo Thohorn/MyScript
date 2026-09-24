@@ -50,6 +50,7 @@ Route::controller(NoteController::class)->middleware(['auth:sanctum', EnsureIsAd
     Route::get('/notes/{ticket}', 'index');
     Route::post('/notes', 'store');
     Route::put('/notes/{note}', 'update');
+    Route::delete('/notes/{note}', 'destroy');
 });
 
 

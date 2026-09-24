@@ -13,6 +13,7 @@ import ShowNoteResponse from '../components/ShowNoteResponse.vue';
 import { Note } from '../../notes/types';
 import { getAllNotesByTicket, noteStore } from '../../notes/store';
 import NoteResponseForm from '../components/NoteResponseForm.vue';
+import ConfirmationModal from '../../../components/ConfirmationModal.vue';
 
 const route = useRoute();
 
@@ -40,6 +41,23 @@ const newNote: Ref<Note> = ref({
 
 getAllNotesByTicket(Number(route.params.id));
 const notes = noteStore.getters.all;
+
+
+const showModal = ref(false);
+const currentNote = ref<Note>()
+
+const showConfirmation = (note:Note) => {
+    currentNote.value = note;
+    showModal.value = true;
+}
+
+const deleteNote = async() => {        
+    showModal.value = false;      
+    if (currentNote.value?.id){
+        await noteStore.actions.delete(currentNote.value?.id);
+    }
+        
+};
 
 
 
@@ -131,10 +149,11 @@ const handleNoteUpdate = async (data: Note) => {
         <NoteResponseForm :prop="newResponse" :what="'Reactie'" @submit="handleResponseSubmit"/>
     </div>
     <!-- Notes -->
+     <div v-if="showModal"><confirmation-modal @canceled="showModal = false" @confirmed="deleteNote" body="Weet je zeker dat je de notitie wil verwijderen?" title="currentNote.title" /></div>
     <div v-if="currentUser.role === 'admin'" class="mt-5 border-t-1">
         <div class="mt-5 text-xl font-bold">Notities:</div>
         <div v-if="notes.length > 0" v-for="note in notes">
-            <ShowNoteResponse :prop="note" :what="'Note'" @submit="handleNoteUpdate" />
+            <ShowNoteResponse :prop="note" :what="'Note'" @submit="handleNoteUpdate" @delete="showConfirmation" />
         </div>
          <div v-if="currentUser.role === 'admin' && newNote.user_id !== 0">
         <NoteResponseForm :prop="newNote" :what="'Note'" @submit="handleNoteSubmit"/>

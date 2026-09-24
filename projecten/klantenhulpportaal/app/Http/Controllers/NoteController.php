@@ -37,4 +37,8 @@ class NoteController extends Controller
             ], 422));
         }
     }
+
+    public function destroy(Note $note) {
+        $note->delete();       
+    }
 }
