@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\NoteController;
 use App\Http\Controllers\ResponseController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
@@ -44,3 +45,11 @@ Route::controller(ResponseController::class)->middleware(['auth:sanctum', Ensure
     Route::post('/responses', 'store');
     Route::put('/responses/{response}', 'update');
 });
+
+Route::controller(NoteController::class)->middleware(['auth:sanctum', EnsureIsAdmin::class])->group(function (){
+    Route::get('/notes/{ticket}', 'index');
+    Route::post('/notes', 'store');
+    Route::put('/notes/{note}', 'update');
+});
+
+

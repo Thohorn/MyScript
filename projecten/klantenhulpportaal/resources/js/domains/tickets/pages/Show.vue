@@ -7,9 +7,12 @@ import { getAllResponsesByTicket, responseStore } from '../../responses/store';
 import AssignAdminForm from '../components/AssignAdminForm.vue';
 import { Ticket } from '../types';
 import StatusForm from '../components/StatusForm.vue';
-import ResponseForm from '../components/ResponseForm.vue';
 import { Response } from '../../responses/types';
 import { Ref, ref } from 'vue';
+import ShowNoteResponse from '../components/ShowNoteResponse.vue';
+import { Note } from '../../notes/types';
+import { getAllNotesByTicket, noteStore } from '../../notes/store';
+import NoteResponseForm from '../components/NoteResponseForm.vue';
 
 const route = useRoute();
 
@@ -28,11 +31,22 @@ const newResponse: Ref<Response> = ref({
 getAllResponsesByTicket(Number(route.params.id));
 const responses = responseStore.getters.all;
 
-const editResponse: Ref<Number> = ref(0);
+
+const newNote: Ref<Note> = ref({
+    body: '',
+    ticket_id: Number(route.params.id),
+    user_id: currentUser.value.id,
+});
+
+getAllNotesByTicket(Number(route.params.id));
+const notes = noteStore.getters.all;
+
+
 
 const handleTicketSubmit = async (data: Ticket) => {
     await TicketStore.actions.update(Number(route.params.id), data);
 };
+
 
 const handleResponseSubmit = async (data: Response) => {
     await responseStore.actions.create(data);
@@ -42,7 +56,16 @@ const handleResponseSubmit = async (data: Response) => {
 const handleResponseUpdate = async (data: Response) => {
     await responseStore.actions.update(Number(data.id), data);
     await getAllResponsesByTicket(Number(route.params.id));
-    editResponse.value = 0;
+}
+
+const handleNoteSubmit = async (data: Note) => {
+    await noteStore.actions.create(data);
+    await getAllNotesByTicket(Number(route.params.id));
+}
+
+const handleNoteUpdate = async (data: Note) => {
+    await noteStore.actions.update(Number(data.id), data);
+    await getAllNotesByTicket(Number(route.params.id));
 }
 
 </script>
@@ -98,29 +121,23 @@ const handleResponseUpdate = async (data: Response) => {
     <div>
         <div class="mt-5 text-xl font-bold">Reacties:</div>
         <div v-if="responses.length > 0" v-for="response in responses">
-            <div v-if="response.ticket_id === Number(route.params.id)" class="mb-6 mt-2 border-1">
-                <div v-if="editResponse !== response.id">
-                    <div>
-                        <div>{{ response.body }}</div>
-                        <div>{{ userStore.getters.byId(response.user_id).value?.name }} {{ userStore.getters.byId(response.user_id).value?.surname }}
-                            <span v-if="response.created_at && response.created_at === response.updated_at" class="float-right">
-                                {{ new Date(response.created_at).toLocaleDateString(undefined, {day:'numeric', month:'long', year:'numeric'}) }}
-                            </span>
-                            <span v-else-if="response.updated_at" class="float-right">(Aangepast) {{ new Date(response.updated_at).toLocaleDateString(undefined, {day:'numeric', month:'long', year:'numeric'}) }}</span>
-                            <span v-if="response.id && currentUser.role === 'admin'" class="float-right mr-5"><button @click="editResponse = response.id">Aanpassen</button></span>
-                        </div>
-                    </div>
-                </div>
-                <div v-else>
-                    <ResponseForm :response="response" @submit="handleResponseUpdate" />
-                </div>
-            </div>
+            <ShowNoteResponse :prop="response" :what="'Reactie'" @submit="handleResponseUpdate" />
         </div>
         <div v-else>
             Nog geen reacties.
         </div>
     </div>
     <div v-if="currentUser.role === 'admin' && newResponse.user_id !== 0">
-        <ResponseForm :response="newResponse" @submit="handleResponseSubmit"/>
+        <NoteResponseForm :prop="newResponse" :what="'Reactie'" @submit="handleResponseSubmit"/>
+    </div>
+    <!-- Notes -->
+    <div v-if="currentUser.role === 'admin'" class="mt-5 border-t-1">
+        <div class="mt-5 text-xl font-bold">Notities:</div>
+        <div v-if="notes.length > 0" v-for="note in notes">
+            <ShowNoteResponse :prop="note" :what="'Note'" @submit="handleNoteUpdate" />
+        </div>
+         <div v-if="currentUser.role === 'admin' && newNote.user_id !== 0">
+        <NoteResponseForm :prop="newNote" :what="'Note'" @submit="handleNoteSubmit"/>
+    </div>
     </div>
 </template>

@@ -7,11 +7,11 @@
     categoriesStore.actions.getAll();
     const categories = categoriesStore.getters.all;
 
-    const props = defineProps({ response: Object });
+    const props = defineProps({ prop: Object, what: String });
     
     const emit = defineEmits(['submit']);
     
-    const form = ref({...props.response });
+    const form = ref({...props.prop });
     
     const handleSubmit = () => emit('submit', form.value);
 
@@ -19,10 +19,10 @@
 <template>
     <ErrorMessage />
     <form @submit.prevent="handleSubmit">
-        <label>Reactie:</label>
+        <label>{{ props.what }}:</label>
         <textarea v-model="form.body" type="text" required />
         <FormError name="body" />
 
-        <button type="submit">Reactie opslaan</button>
+        <button type="submit">{{ props.what }} opslaan</button>
     </form>
 </template>
