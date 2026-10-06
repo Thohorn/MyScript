@@ -1,7 +1,7 @@
 import { ref } from "vue";
 import { storeModuleFactory } from "../../services/store";
 
-interface User {
+export interface User {
     id: number;
     name: string;
     surname: string;
@@ -32,3 +32,5 @@ export const emptyCurrentUser: CurrentUser = {
 
 export const userStore = storeModuleFactory<User>('user');
 export const currentUser = ref<CurrentUser>(emptyCurrentUser);
+
+export const userRoles = ['user', 'admin',];

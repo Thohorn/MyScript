@@ -25,6 +25,7 @@
             <td>{{ user.email }}</td>
             <td>{{ user.role }}</td>
             <td>{{ user.phone_number }}</td>
+            <td><router-link :to="{name: 'user.edit', params: {id: user.id}}">Aanpassen</router-link></td>
         </tr>
     </tbody>
 </table>

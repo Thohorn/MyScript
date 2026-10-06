@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreUserRequest;
 use Illuminate\Http\Request;
 use App\Http\Resources\UserResource;
 use App\Models\User;
@@ -19,5 +20,10 @@ class UserController extends Controller
             return UserResource::collection(User::where('id', $user->id)->orWhere('role', 'admin')->get());
         }
         
+    }
+
+    public function update(StoreUserRequest $request, User $user): User {
+        $user->update($request->validated());
+        return $user;
     }
 }
