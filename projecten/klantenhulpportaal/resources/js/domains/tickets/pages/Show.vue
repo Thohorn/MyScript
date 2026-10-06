@@ -60,7 +60,6 @@ const deleteNote = async() => {
 };
 
 
-
 const handleTicketSubmit = async (data: Ticket) => {
     await TicketStore.actions.update(Number(route.params.id), data);
 };
@@ -153,10 +152,10 @@ const handleNoteUpdate = async (data: Note) => {
     <div v-if="currentUser.role === 'admin'" class="mt-5 border-t-1">
         <div class="mt-5 text-xl font-bold">Notities:</div>
         <div v-if="notes.length > 0" v-for="note in notes">
-            <ShowNoteResponse :prop="note" :what="'Note'" @submit="handleNoteUpdate" @delete="showConfirmation" />
+            <ShowNoteResponse :prop="note" :what="'Notitie'" @submit="handleNoteUpdate" @delete="showConfirmation" />
         </div>
          <div v-if="currentUser.role === 'admin' && newNote.user_id !== 0">
-        <NoteResponseForm :prop="newNote" :what="'Note'" @submit="handleNoteSubmit"/>
+        <NoteResponseForm :prop="newNote" :what="'Notitie'" @submit="handleNoteSubmit"/>
     </div>
     </div>
 </template>

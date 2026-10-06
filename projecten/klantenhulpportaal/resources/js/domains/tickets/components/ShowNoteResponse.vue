@@ -48,7 +48,7 @@
                     <span v-else-if="item.updated_at" class="float-right">(Aangepast) {{ new Date(item.updated_at).toLocaleDateString(undefined, {day:'numeric', month:'long', year:'numeric'}) }}</span>
                     <span v-if="item.id && currentUser.role === 'admin'" class="float-right mr-5">
                         <button @click="editItem = item.id">Aanpassen</button>
-                        <button v-if="props.what === 'Note'" class="ml-2" @click="handleDelete(item)">Verwijderen</button>
+                        <button v-if="props.what === 'Notitie'" class="ml-2" @click="handleDelete(item)">Verwijderen</button>
                     </span>
                 </div>
             </div>

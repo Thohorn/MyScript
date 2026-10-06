@@ -2,10 +2,6 @@
     import { ref } from 'vue';
     import ErrorMessage from '../../../components/errorMessage.vue';
     import FormError from '../../../components/FormError.vue';
-    import { categoriesStore } from '../../categories/store.js';
-
-    categoriesStore.actions.getAll();
-    const categories = categoriesStore.getters.all;
 
     const props = defineProps({ prop: Object, what: String });
     
@@ -13,7 +9,10 @@
     
     const form = ref({...props.prop });
     
-    const handleSubmit = () => emit('submit', form.value);
+    const handleSubmit = () => {
+        emit('submit', form.value);
+        form.value.body = '';
+    }
 
 </script>
 <template>
