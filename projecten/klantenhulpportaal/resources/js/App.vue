@@ -27,7 +27,10 @@ const handleLogout = async() => {
         <span v-if="currentUser.loggedIn">
             <span><router-link :to="{name: 'tickets.overview'}">Ticket Overzicht</router-link> | </span>
             <span><router-link :to="{name: 'tickets.create'}">Maak Ticket</router-link> | </span>
-            <span v-if="currentUser.role === 'admin'"><router-link :to="{name: 'categories.overview'}">Category overzicht</router-link> | </span>
+            <span v-if="currentUser.role === 'admin'">
+                <router-link :to="{name: 'categories.overview'}">Category overzicht</router-link> | 
+                <router-link :to="{name: 'user.overview'}">Gebruiker overzicht</router-link> |
+            </span>
             <span><button @click="handleLogout">Log uit</button></span>
         </span>
         <span v-else><router-link :to="{name: 'user.login'}">Login</router-link></span>        
