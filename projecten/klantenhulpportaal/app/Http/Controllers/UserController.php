@@ -3,15 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
-use Illuminate\Http\Request;
 use App\Http\Resources\UserResource;
 use App\Models\Ticket;
 use App\Models\User;
+use App\Notifications\UserCreated;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Facades\Auth;
-
-use function PHPUnit\Framework\isEmpty;
 
 class UserController extends Controller
 {
@@ -24,7 +21,16 @@ class UserController extends Controller
         else {
             return UserResource::collection(User::where('id', $user->id)->orWhere('role', 'admin')->get());
         }
-        
+    }
+
+    public function store(StoreUserRequest $request) {
+        $user = $request->validated();
+        $new_user = User::create($user);
+
+        $new_user->notify(new UserCreated());
+
+
+        return UserResource::collection(User::where('id', $new_user->id)->orWhere('role', 'admin')->get());
     }
 
     public function update(StoreUserRequest $request, User $user): User {

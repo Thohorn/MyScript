@@ -31,6 +31,7 @@ Route::controller(TicketController::class)->middleware('auth:sanctum')->group(fu
 
 Route::controller(UserController::class)->middleware('auth:sanctum')->group(function () {
     Route::get('/user', 'index');
+    Route::post('/user', 'store')->withoutMiddleware('auth:sanctum');
     Route::put('/user/{user}', 'update')->middleware(EnsureIsAdmin::class);
     Route::delete('/user/{user}', 'destroy')->middleware(EnsureIsAdmin::class);
 });

@@ -4,8 +4,12 @@ import ErrorMessage from '../../../components/errorMessage.vue';
 import FormError from '../../../components/FormError.vue';
 import { userRoles } from '../store.js';
 
-    const props = defineProps({ user: Object });
+    const props = defineProps({ user: Object, edit: Boolean });
     const form = ref({...props.user });
+
+    if (!props.edit) {
+        form.value.role = 'user';
+    }
 
     const emit = defineEmits(['submit']);    
     const handleSubmit = () => emit('submit', form.value);
@@ -29,7 +33,7 @@ import { userRoles } from '../store.js';
             <input v-model="form.email" type="email" required />
             <FormError name="email" />
         </div>
-        <div class="mt-2">
+        <div v-if="props.edit" class="mt-2">
             <label>Rol: </label>
             <select v-model="form.role" required>
                 <option v-for="role in userRoles" :key="role" :value="role">
@@ -37,13 +41,26 @@ import { userRoles } from '../store.js';
                 </option>
             </select>
         </div>
+        <div v-else>
+            <div class="mt-2">
+                <label>Wachtwoord: </label>
+                <input v-model="form.password" type="password" required />
+            </div>
+            <div class="mt-2">
+                <label>Herhaal wachtwoord: </label>
+                <input v-model="form.password_confirmation" type="password" required />
+            </div>
+        </div>
         <div class="mt-2">
             <label>Telefoonnummer: </label>
             <input v-model="form.phone_number" type="text" required />
             <FormError name="phone_number" />
         </div>
         <div class="mt-5">
-            <button type="submit">Gebruiker opslaan</button>
+            <button type="submit">
+                <span v-if="edit">Gebruiker opslaan</span>
+                <span v-else>Gebruiker aanmaken</span>
+            </button>
         </div>
     </form>
 </template>

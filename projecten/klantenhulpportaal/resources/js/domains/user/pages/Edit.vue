@@ -11,7 +11,6 @@
     const user = userStore.getters.byId(Number(route.params.id));
 
     const handleSubmit = async (data: User) => {
-        console.log("Trying to edit.");
         await userStore.actions.update(Number(route.params.id), data);
         router.push({name: 'user.overview'});
     }
@@ -20,5 +19,5 @@
 
 <template>
     <div>{{ user.name }} {{ user.surname }} aanpassen</div>
-    <Form :user="user" @submit="handleSubmit"/>
+    <Form :user="user" :edit="true" @submit="handleSubmit"/>
 </template>

@@ -19,5 +19,5 @@ const handleSubmit = async (data: Category) => {
 </script>
 
 <template>
-<Form v-if="category" :category="category"  @submit="handleSubmit"/>
+<Form v-if="category" :category="category" @submit="handleSubmit"/>
 </template>
