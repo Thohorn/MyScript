@@ -3,7 +3,7 @@
     import { categoriesStore } from '../store';
     import { Category } from '../types';
     import ConfirmationModal from '../../../components/ConfirmationModal.vue';
-import ErrorMessage from '../../../components/errorMessage.vue';
+    import ErrorMessage from '../../../components/errorMessage.vue';
 
     categoriesStore.actions.getAll();
     const categories = categoriesStore.getters.all;    
