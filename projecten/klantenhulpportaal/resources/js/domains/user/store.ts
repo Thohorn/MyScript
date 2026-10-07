@@ -2,15 +2,15 @@ import { ref } from "vue";
 import { storeModuleFactory } from "../../services/store";
 
 export interface User {
-    id: number;
+    id?: number;
     name: string;
     surname: string;
     email: string;
-    email_verified_at: string;
+    email_verified_at?: string;
     phone_number: string;
     role: string;
-    created_at: string;
-    updated_at: string;
+    created_at?: string;
+    updated_at?: string;
 }
 
 interface CurrentUser extends User {

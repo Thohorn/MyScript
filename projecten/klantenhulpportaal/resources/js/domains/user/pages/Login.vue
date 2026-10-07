@@ -40,5 +40,8 @@
         <button type="submit">Inloggen</button>
         <button id="forgot-password" @click="handleForgotPassword">Wachtwoord vergeten</button>
     </form>
+    <div class="mt-5">
+        <Router-link :to="{name: 'user.create'}"><button>Maak een gebruiker aan</button></Router-link>
+    </div>
         
 </template>
