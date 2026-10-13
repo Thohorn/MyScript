@@ -14,8 +14,9 @@ const ticket: Ticket = {
     user_id: currentUser.value.id,
 }
 
+// niet data gebruiken maar noemen wat het is. In dit geval ticket
 const handleSubmit = async (data: Ticket) => {
-    TicketStore.actions.create(data);
+    await TicketStore.actions.create(data);
     router.push({name: 'tickets.overview'});
 }
 

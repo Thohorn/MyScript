@@ -14,6 +14,8 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
+// Group the middleware en exclude waar nodig ipv middleware toevoegen per controller
+
 Route::controller(AuthController::class)->group(function () {
     Route::post('/login', 'authenticate');
     Route::post('/logout', 'logout');

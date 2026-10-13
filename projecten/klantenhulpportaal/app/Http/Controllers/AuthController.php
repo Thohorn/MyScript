@@ -33,6 +33,7 @@ class AuthController extends Controller
             ], 422));
     }
 
+    // geen void returnen maar een empty response ofzo
     public function logout(Request $request): void {
         Auth::logout();
         

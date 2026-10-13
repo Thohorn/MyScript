@@ -1,5 +1,6 @@
+// geen ? gebruiken bij types en interfaces
 export type Response = {
-    id? : number;
+    id : number;
     body: string;
     ticket_id: number;
     user_id: number;

@@ -26,7 +26,7 @@ class ResponseController extends Controller
 
         $user = User::where('id', $ticket['user_id'])->first();
         $user->notify(new ResponseAdded(Ticket::where('id', $request['ticket_id'])->first()));
-
+        // Geen collection returnen maar alleen de response zie ticketcontroller
         return ResponseResource::collection((Response::where('ticket_id', $request['ticket_id'])->get()));
     }
 

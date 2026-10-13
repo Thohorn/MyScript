@@ -1,6 +1,7 @@
 import { ref } from "vue";
 import { storeModuleFactory } from "../../services/store";
 
+// geen ? gebruiken bij types en interfaces
 export interface User {
     id?: number;
     name: string;

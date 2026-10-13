@@ -19,7 +19,8 @@ class CategoryController extends Controller
     public function store(StoreCategoryRequest $request): ResourceCollection {
         $category = $request->validated();
         Category::create($category);
-        
+
+        // Geen collection returnen maar alleen de Category zie ticketcontroller
         return CategoryResource::collection(Category::orderBy('title', 'ASC')->get());        
     }
 

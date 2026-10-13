@@ -18,16 +18,14 @@ class TicketController extends Controller
         if ($user->role === "admin"){
             return TicketResource::collection(Ticket::orderBy('created_at', 'DESC')->get());
         }
-        else{
-            return TicketResource::collection(Ticket::where('user_id', $user->id)->orderBy('created_at', 'DESC')->get());
-        }
+       
+        return TicketResource::collection(Ticket::where('user_id', $user->id)->orderBy('created_at', 'DESC')->get());       
     }
 
-    public function store(StoreTicketRequest $request): ResourceCollection {
-        $ticket = $request->validated();
-        Ticket::create($ticket);
+    public function store(StoreTicketRequest $request) {
+        $ticket =Ticket::create($request->validated());
         
-        return TicketResource::collection(Ticket::orderBy('created_at', 'DESC')->get());
+        return new TicketResource($ticket);
     }
 
     public function update(StoreTicketRequest $request, Ticket $ticket): Ticket {

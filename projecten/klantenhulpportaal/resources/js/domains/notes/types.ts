@@ -1,3 +1,4 @@
+// geen ? gebruiken bij types en interfaces
 export type Note = {
     id? : number;
     body: string;

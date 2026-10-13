@@ -21,7 +21,7 @@ class NoteController extends Controller
         Note::create($request->validated());
 
         // $ticket = Ticket::where('id', $request['ticket_id'])->first();
-
+        // Geen collection returnen maar alleen de Note zie ticketcontroller
         return NoteResource::collection((Note::where('ticket_id', $request['ticket_id'])->get()));
     }
 

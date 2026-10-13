@@ -23,7 +23,10 @@ userStore.actions.getAll();
 
 const ticket = TicketStore.getters.byId(Number(route.params.id));
 
-const newResponse: Ref<Response> = ref({
+
+// user_id in de background doen
+const newResponse = ref<Response>({
+    id: 0,
     body: '',
     ticket_id: Number(route.params.id),
     user_id: currentUser.value.id,
@@ -33,7 +36,7 @@ getAllResponsesByTicket(Number(route.params.id));
 const responses = responseStore.getters.all;
 
 
-const newNote: Ref<Note> = ref({
+const newNote = ref<Note>({
     body: '',
     ticket_id: Number(route.params.id),
     user_id: currentUser.value.id,
